@@ -1,6 +1,5 @@
-
 ---
-title: 'Applied Statistics for High-throughput Biology: Session 2'
+title: '응용 통계학: 대용량 생물학을 위한 세션 2'
 author: "Levi Waldron"
 output: slidy_presentation
 ---
@@ -9,50 +8,50 @@ output: slidy_presentation
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
 ```
 
-## Session 2 outline
+## 세션 2 개요
 
-- Hypothesis testing for categorical variables
-    - Fisher's Exact Test and Chi-square Test (["Association tests" book section](https://genomicsclass.github.io/book/pages/association_tests.html))
+- 범주형 변수에 대한 가설 검정
+    - Fisher의 정확 검정 및 카이제곱 검정 (["연관성 검정" 책 섹션](https://genomicsclass.github.io/book/pages/association_tests.html))
 
-- Resampling methods
-    + ["Permutation Tests" book section](https://genomicsclass.github.io/book/pages/permutation_tests.html)
-    + [Cross-validation book section](https://genomicsclass.github.io/book/pages/crossvalidation.html)
-    + bootstrap simulation (see Introduction to Statistical Learning section 5.2: https://www.statlearning.com/)
+- 리샘플링 방법
+    + ["순열 검정" 책 섹션](https://genomicsclass.github.io/book/pages/permutation_tests.html)
+    + [교차 검증 책 섹션](https://genomicsclass.github.io/book/pages/crossvalidation.html)
+    + 부트스트랩 시뮬레이션 (Introduction to Statistical Learning 섹션 5.2 참조: https://www.statlearning.com/)
 
-- [Exploratory data analysis](https://genomicsclass.github.io/book/pages/exploratory_data_analysis.html)
+- [탐색적 데이터 분석](https://genomicsclass.github.io/book/pages/exploratory_data_analysis.html)
 
-## Hypothesis testing for categorical variables
+## 범주형 변수에 대한 가설 검정
 
-- Recall hypothesis testing and confidence intervals for one or two continuous variables: 
-    - *Z-test, t-test, correlation*
+- 하나 또는 두 개의 연속형 변수에 대한 가설 검정 및 신뢰 구간 복습:
+    - *Z-검정, t-검정, 상관 관계*
 
-- Two binary variables:
-    - Fisher's Exact Test
-    - Pearson's Chi-square Test
+- 두 개의 이진 변수:
+    - Fisher의 정확 검정
+    - Pearson의 카이제곱 검정
 
-## Lady Tasting Tea
+## 차를 맛보는 부인
 
-- The Lady in question claimed to be able to tell whether the tea or the milk was added first to a cup
-- Fisher proposed to give her **eight** cups, **four** of each variety, in random order
-    - the Lady is **fully informed** of the experimental method
-    - $H_0$: the Lady has no ability to tell which was added first
+- 문제의 부인은 컵에 차를 먼저 넣었는지 우유를 먼저 넣었는지 구별할 수 있다고 주장했습니다.
+- Fisher는 그녀에게 각각 4개씩, 무작위 순서로 **8개**의 컵을 제공할 것을 제안했습니다.
+    - 부인은 실험 방법에 대해 **완전히 알고** 있습니다.
+    - $H_0$: 부인은 어느 것이 먼저 추가되었는지 구별할 능력이 없습니다.
 
 <center>
-<img src="images/NiceCupofTea.jpg" alt="Lady tasting tea" align="middle" style="height: 200px;">
+<img src="images/NiceCupofTea.jpg" alt="차를 맛보는 부인" align="middle" style="height: 200px;">
 </center>
 
-Source: https://en.wikipedia.org/wiki/Lady_tasting_tea
+출처: https://en.wikipedia.org/wiki/Lady_tasting_tea
 
-## Fisher's Exact Test
+## Fisher의 정확 검정
 
-p-value is the probability of the observed number of successes, or more, under $H_0$
+p-값은 $H_0$ 하에서 관찰된 성공 횟수 또는 그 이상의 확률입니다.
 
 <table>
-<caption>Tea-Tasting Distribution</caption>
+<caption>차 맛보기 분포</caption>
 <tr>
-<th scope="col">Success count</th>
-<th scope="col">Permutations of selection</th>
-<th scope="col">Number of permutations</th>
+<th scope="col">성공 횟수</th>
+<th scope="col">선택 순열</th>
+<th scope="col">순열 수</th>
 </tr>
 <tr>
 <td>0</td>
@@ -80,56 +79,56 @@ p-value is the probability of the observed number of successes, or more, under $
 <td>1 × 1 = 1</td>
 </tr>
 <tr>
-<th colspan="2" scope="row">Total</th>
+<th colspan="2" scope="row">총계</th>
 <td>70</td>
 </tr>
 </table>
 
-* x = correct, o = incorrect
+* x = 정답, o = 오답
 
-What do you notice about all these combinations?
+이 모든 조합에서 무엇을 알 수 있습니까?
 
-* Each only involves four guesses
-* Without knowing how many cups had milk added first, there would be many more possible guesses
+* 각 조합은 네 번의 추측만 포함합니다.
+* 우유를 먼저 넣은 컵이 몇 개인지 모르면 훨씬 더 많은 추측이 가능했을 것입니다.
 
-## Notes on Fisher's Exact Test
+## Fisher의 정확 검정에 대한 참고 사항
 
-- Can also be applied to $r \times c$ tables
-- Remember that the margins of the table are *fixed by design*
-- One-tailed version (used in Gene Set Enrichment Analysis) is referred to as the Hypergeometric Test
-- Exact p-values are difficult (and unnecessary) for large samples
+- $r \times c$ 표에도 적용할 수 있습니다.
+- 표의 여백은 *설계에 의해 고정*된다는 점을 기억하십시오.
+- 단일 꼬리 버전(유전자 집합 농축 분석에 사용)은 초기하 검정이라고 합니다.
+- 큰 표본에 대해서는 정확한 p-값을 계산하기 어렵습니다(그리고 불필요합니다).
     - `fisher.test(x, y = NULL, etc, simulate.p.value = FALSE)`
 
-## Applications of Fisher's Exact Test
+## Fisher의 정확 검정 응용
 
-- Has been applied (with peril) to gene set analysis, e.g.:
-    - 10 of my top 100 genes are annotated with the cytokinesis GO term
-    - 465 of 21,000 human genes are annotated with the cytokinesis GO term
-    - Are my top 100 genes enriched for cytokinesis process?
-- Problems with this analysis:
-    - Main problem: top-n genes tend to be correlated, so their selections are not independent trials
-    - Secondary: does not match design for $H_0$
+- 유전자 집합 분석 등에 (위험하게) 적용되었습니다. 예:
+    - 상위 100개 유전자 중 10개가 세포분열 GO 용어로 주석 처리되었습니다.
+    - 21,000개 인간 유전자 중 465개가 세포분열 GO 용어로 주석 처리되었습니다.
+    - 내 상위 100개 유전자가 세포분열 과정에 농축되어 있습니까?
+- 이 분석의 문제점:
+    - 주요 문제: 상위 n개 유전자는 상관 관계가 있는 경향이 있으므로 선택이 독립적인 시행이 아닙니다.
+    - 부차적 문제: $H_0$에 대한 설계와 일치하지 않습니다.
 
-- There are many alternative approaches in Gene Set Analysis, but this approach isn't as bad as statisticians thought. See:
+- 유전자 집합 분석에는 많은 대안적 접근 방식이 있지만 이 접근 방식은 통계학자들이 생각했던 것만큼 나쁘지는 않습니다. 다음을 참조하십시오.
 
 Geistlinger _et al._ Toward a gold standard for benchmarking gene set enrichment analysis. Brief. Bioinform. (2020) [doi:10.1093/bib/bbz158](http://dx.doi.org/10.1093/bib/bbz158)
     
 
-## Chi-squared test
+## 카이제곱 검정
 
-- Test of independence for $r \times c$ table (two categorical variables)
-- Does not assume the margins are fixed by design
-    - i.e., whether each cup of tea has milk poured first is determined by coin flip, and the Lady doesn't know how many
-    - more common in practice
-    - classic genomics example is GWAS
-- $H_0$: the two variables are independent
-- $H_A$: there is an association between the variables
+- $r \times c$ 표(두 범주형 변수)에 대한 독립성 검정
+- 여백이 설계에 의해 고정된다고 가정하지 않습니다.
+    - 즉, 각 찻잔에 우유를 먼저 따르는지 여부는 동전 던지기로 결정되며, 부인은 몇 개인지 모릅니다.
+    - 실제로는 더 일반적입니다.
+    - 고전적인 유전체학 예는 GWAS입니다.
+- $H_0$: 두 변수는 독립적입니다.
+- $H_A$: 변수 간에 연관성이 있습니다.
 
-## Application to GWAS
+## GWAS에 적용
 
-* Interested in association between disease and some potential causative factor
-* In a case-control study, the numbers of cases and controls are fixed, but the other variable is not
-* In a prospective or longitudinal cohort study, neither the number of cases or the other variable are fixed
+* 질병과 일부 잠재적 원인 인자 간의 연관성에 관심이 있습니다.
+* 환자-대조군 연구에서는 환자 및 대조군의 수는 고정되지만 다른 변수는 고정되지 않습니다.
+* 전향적 또는 종단적 코호트 연구에서는 사례 수나 다른 변수 모두 고정되지 않습니다.
 
 ```{r, echo=FALSE}
 disease = factor(c(rep(0, 180), rep(1, 20), rep(0, 40), rep(1, 10)),
@@ -142,7 +141,7 @@ dat <- dat[sample(nrow(dat)), ] #shuffle them up
 summary(dat)
 ```
 
-## Apply the chi-squared test
+## 카이제곱 검정 적용
 
 ```{r}
 table(disease, genotype)
@@ -150,184 +149,183 @@ chisq.test(disease, genotype)
 chisq.test(disease, genotype, simulate.p.value = TRUE)
 ```
 
-* Chisquare-test p-values are approximate, and inaccuracy increases with small cells in $r \times c$ tables (say, less than 5)
-* $simulate.p.value$ is a more valid way to address small counts than using Fisher's Exact Test, if $H_0$ corresponds to a chi-square test
-* Fisher's Exact Test provides an exact p-value for a different hypothesis
+* 카이제곱 검정 p-값은 근사치이며, $r \times c$ 표의 작은 셀(예: 5 미만)에서는 부정확성이 증가합니다.
+* $simulate.p.value$는 $H_0$가 카이제곱 검정에 해당하는 경우 Fisher의 정확 검정을 사용하는 것보다 작은 개수를 처리하는 더 유효한 방법입니다.
+* Fisher의 정확 검정은 다른 가설에 대한 정확한 p-값을 제공합니다.
 
-## Calculate odds ratio
+## 승산비 계산
 
-* Note that the result says nothing about *how* the departure from independence occurs
-* Odds ratios do
+* 결과는 독립성으로부터의 이탈이 *어떻게* 발생하는지에 대해서는 아무것도 말해주지 않습니다.
+* 승산비는 그렇게 합니다.
 
 ```{r}
 library(epitools)
 epitools::oddsratio(genotype, disease, method = "wald")$measure
 ```
 
-## Note on factor reference levels
+## 요인 참조 수준에 대한 참고 사항
 
-Use the `relevel()` function if you want to change the reference level of a factor, or `dplyr::recode_factor()`:
+요인의 참조 수준을 변경하려면 `relevel()` 함수를 사용하거나 `dplyr::recode_factor()`를 사용하십시오.
 
 ```{r}
 epitools::oddsratio(relevel(genotype, "aa"), disease)$measure
 ```
 
-(the default is whichever level is first alphabetically!)
+(기본값은 알파벳순으로 첫 번째 수준입니다!)
 
-## Summary - two categorical variables
+## 요약 - 두 개의 범주형 변수
 
-- Choice between Fisher's Exact Test and Chi-square test is determined by experimental design
-- If any counts in the table are less than 5, can use `simulate.p.value=TRUE` to get a more accurate p-value from the chi-square test
-- Both assume independent observations (important!!)
-- In a GWAS, correction for multiple testing is required
+- Fisher의 정확 검정과 카이제곱 검정 간의 선택은 실험 설계에 따라 결정됩니다.
+- 표의 개수가 5보다 작은 경우 `simulate.p.value=TRUE`를 사용하여 카이제곱 검정에서 더 정확한 p-값을 얻을 수 있습니다.
+- 둘 다 독립적인 관찰을 가정합니다(중요!!).
+- GWAS에서는 다중 검정에 대한 수정이 필요합니다.
 
-# Resampling methods
+# 리샘플링 방법
 
-## Big classes of resampling methods
+## 리샘플링 방법의 주요 유형
 
-* Resampling involves simulating repeated samples from the one available sample
-    - *Permutation tests*: shuffling labels to generate an empirical null distribution
-    - *Cross-validation*: generate training and test sets _without_ replacement
-    - *Bootstrap*: generate samples of size $n$, _with_ replacement
+* 리샘플링은 사용 가능한 하나의 표본에서 반복적인 표본을 시뮬레이션하는 것을 포함합니다.
+    - *순열 검정*: 경험적 귀무 분포를 생성하기 위해 레이블을 섞습니다.
+    - *교차 검증*: _비복원_으로 훈련 세트와 테스트 세트를 생성합니다.
+    - *부트스트랩*: 크기 $n$의 표본을 _복원_으로 생성합니다.
 
-## Permutation test
+## 순열 검정
 
-Response (y) variable is permuted to guarantee true $H_0$:
+참 $H_0$을 보장하기 위해 반응 (y) 변수를 순열합니다.
 
 <center>
 <img src="images/nrg1521-i1.gif" alt="nrg1521-i1.gif" style="height: 400px;"/>
 </center>
 
 <font size="2">
-Genome-wide association studies for common diseases and complex traits. *Nature Reviews Genetics 6*, 95-108 (February 2005).
+일반적인 질병 및 복잡한 특성에 대한 전체 유전체 연관 연구. *Nature Reviews Genetics 6*, 95-108 (2005년 2월).
 </font>
 
-## Permutation test
+## 순열 검정
 
-- Calculate the test statistic for each permutation
-    - 999 is a typical number
-- P-value is the quantile of the real test statistic in the "empirical null distribution" of permutation test statistics
-- Permutations tests *still have assumptions*: 
-    - samples are assumed to be independent and “exchangeable”
-    - hidden structure such as families can cause anti-conservative p-values
+- 각 순열에 대한 검정 통계량을 계산합니다.
+    - 999가 일반적인 숫자입니다.
+- P-값은 순열 검정 통계량의 "경험적 귀무 분포"에서 실제 검정 통계량의 분위수입니다.
+- 순열 검정은 *여전히 가정 사항이 있습니다*:
+    - 표본은 독립적이고 "교환 가능"하다고 가정합니다.
+    - 가족과 같은 숨겨진 구조는 반보수적인 p-값을 유발할 수 있습니다.
 
-## K-fold cross-validation: setting
+## K-겹 교차 검증: 설정
 
-* Setting: prediction (as opposed to inference)
-* Potential uses: 
-    1. to tune a model to the data
-    2. to avoid reporting inflated prediction accuracy due to over-fitting
-    3. to compare the accuracy of competing algorithms in one dataset
+* 설정: 추론과 반대되는 예측
+* 잠재적 용도:
+    1. 데이터를 모델에 맞게 조정
+    2. 과적합으로 인한 부풀려진 예측 정확도 보고 방지
+    3. 단일 데이터 세트에서 경쟁 알고리즘의 정확도 비교
 
 <center>
 <img src="images/three-fold.png" alt="three-fold.png" style="width: 600px;"/>
 
-Three-fold cross-validation
+3겹 교차 검증
 
 </center>
 
-## Definitions: Training, Validation, Test
+## 정의: 훈련, 검증, 테스트
 
-* The model is initially fit on a **training dataset**
-* Successively, the fitted model is used to predict the responses for the observations in a second dataset called the **validation dataset**. The validation dataset might be used repeatedly for selecting from different models.
-* Finally, the **test dataset** is a dataset used to provide an unbiased evaluation of a *final model* fit on the training dataset.
+* 모델은 처음에 **훈련 데이터 세트**에 적합화됩니다.
+* 연속적으로 적합화된 모델은 **검증 데이터 세트**라는 두 번째 데이터 세트의 관찰에 대한 응답을 예측하는 데 사용됩니다. 검증 데이터 세트는 다른 모델에서 선택하기 위해 반복적으로 사용될 수 있습니다.
+* 마지막으로 **테스트 데이터 세트**는 훈련 데이터 세트에 적합화된 *최종 모델*의 편향되지 않은 평가를 제공하는 데 사용되는 데이터 세트입니다.
 
 <font size="2">
 https://en.wikipedia.org/wiki/Training,_validation,_and_test_sets
 </font>
 
-## Tuning: training set and validation set error
+## 튜닝: 훈련 세트 및 검증 세트 오류
 
 <center>
-<img src="images/ISLR_Fig29.png" alt="ISLR Fig 2.9 U curve" style="width: 600px;"/>
+<img src="images/ISLR_Fig29.png" alt="ISLR 그림 2.9 U 곡선" style="width: 600px;"/>
 
-ISLR Figure 2.9: Training set vs. Validation set error: the U
+ISLR 그림 2.9: 훈련 세트 대 검증 세트 오류: U자형 곡선
 
 </center>
 
-* Training set error always decreased with more flexible models
-* Validation set error tends to be U-shaped: model "tuning" searches for this low point
-* Cross-validation for tuning does not equal cross-validation for estimating independent accuracy
+* 훈련 세트 오류는 항상 더 유연한 모델에서 감소했습니다.
+* 검증 세트 오류는 U자형 경향이 있습니다. 모델 "튜닝"은 이 낮은 지점을 찾습니다.
+* 튜닝을 위한 교차 검증은 독립적인 정확도 추정을 위한 교차 검증과 같지 않습니다.
 
 <font size="2">
 James, Witten, Hastie, Tibshirani.  An Introduction to Statistical Learning with Applications in R. Springer, 2014. https://www.statlearning.com/
 
-FIGURE 2.9. Left: Data simulated from f, shown in black. Three estimates of f are shown: the linear regression line (orange curve), and two smoothing spline fits (blue and green curves). Right: Training MSE (grey curve), test MSE (red curve), and minimum possible test MSE over all methods (dashed line). Squares represent the training and test MSEs for the three fits shown in the left-hand panel.
+그림 2.9. 왼쪽: f에서 시뮬레이션된 데이터(검은색으로 표시됨). f의 세 가지 추정치가 표시됩니다: 선형 회귀선(주황색 곡선)과 두 개의 평활 스플라인 적합(파란색 및 녹색 곡선). 오른쪽: 훈련 MSE(회색 곡선), 테스트 MSE(빨간색 곡선) 및 모든 방법에 대한 최소 가능 테스트 MSE(점선). 사각형은 왼쪽 패널에 표시된 세 가지 적합에 대한 훈련 및 테스트 MSE를 나타냅니다.
 </font>
 
-## K-fold cross-validation: algorithm
+## K-겹 교차 검증: 알고리즘
 
-* Create $K$ "folds" from the sample of size $n$, $K \le n$
-1. Randomly sample $1/K$ observations (without replacement) as the validation set
-2. Use remaining samples as the training set
-3. Fit model on the training set, estimate accuracy on the validation set
-4. Repeat $K$ times, not using the same validation samples
-5. Average validation accuracy from each of the validation sets
+* 크기 $n$의 표본에서 $K$개의 "겹"을 만듭니다. $K \le n$
+1. 검증 세트로 $1/K$개의 관찰을 무작위로 표본 추출합니다(비복원).
+2. 나머지 표본을 훈련 세트로 사용합니다.
+3. 훈련 세트에서 모델을 적합화하고 검증 세트에서 정확도를 추정합니다.
+4. 동일한 검증 표본을 사용하지 않고 $K$번 반복합니다.
+5. 각 검증 세트의 평균 검증 정확도를 계산합니다.
 
-## Variability in cross-validation
+## 교차 검증의 변동성
 
 <center>
 <img src="images/ISLR_Fig52.png" alt="ISLR_Fig52.png" style="width: 600px;"/>
 
-ISLR Figure 5.2: Variability in 2-fold cross-validation
+ISLR 그림 5.2: 2겹 교차 검증의 변동성
 </center>
 
-* Repeating cross-validation many times then averaging the results is called _smoothing_.
-* Simply choosing a different random training and validation set each time is called _Monte Carlo Cross-validation (MCCV)_
+* 교차 검증을 여러 번 반복한 다음 결과를 평균화하는 것을 _평활화_라고 합니다.
+* 매번 다른 무작위 훈련 및 검증 세트를 선택하는 것을 _몬테카를로 교차 검증(MCCV)_이라고 합니다.
 
 <font size="2">
 James, Witten, Hastie, Tibshirani.  An Introduction to Statistical Learning with Applications in R. Springer, 2014. https://www.statlearning.com/
 
-FIGURE 5.2. The validation set approach was used on the Auto data set in order to estimate the test error that results from predicting mpg using polynomial functions of horsepower. Left: Validation error estimates for a single split into training and validation data sets. Right: The validation method was repeated ten times, each time using a different random split of the observations into a training set and a validation set. This illustrates the variability in the estimated test MSE that results from this approach.
-
+그림 5.2. Auto 데이터 세트에서 마력의 다항 함수를 사용하여 mpg를 예측한 결과 발생하는 테스트 오류를 추정하기 위해 검증 세트 접근 방식을 사용했습니다. 왼쪽: 훈련 및 검증 데이터 세트로 한 번 분할한 경우의 검증 오류 추정치. 오른쪽: 검증 방법을 10번 반복했으며, 매번 관찰을 훈련 세트와 검증 세트로 다르게 무작위 분할했습니다. 이는 이 접근 방식에서 발생하는 추정된 테스트 MSE의 변동성을 보여줍니다.
 </font>
 
-## Cross-validation summary
+## 교차 검증 요약
 
-* In prediction modeling, we think of data as _training_ or _test_
-     - cross-validation is a way to estimate test set error from a training set
-* Training set error always decreases with more complex (flexible) models
-* Test set error as a function of model flexibility tends to be U-shaped
-     - the low point of the U represents the most appropriate amount of model complexity
+* 예측 모델링에서 데이터를 _훈련_ 또는 _테스트_로 생각합니다.
+     - 교차 검증은 훈련 세트에서 테스트 세트 오류를 추정하는 방법입니다.
+* 훈련 세트 오류는 항상 더 복잡한(유연한) 모델에서 감소합니다.
+* 모델 유연성의 함수로서의 테스트 세트 오류는 U자형 경향이 있습니다.
+     - U의 낮은 지점은 가장 적절한 모델 복잡성 수준을 나타냅니다.
 
-## Summary of The Bootstrap
+## 부트스트랩 요약
 
-* The Bootstrap is a very general approach to estimating uncertainty, e.g. standard errors
-* Can be applied to a wide range of models and statistics
-* Robust to outliers and violations of model assumptions
-* The basic approach:
-    1. Using the available sample (size $n$), generate a new sample of size $n$ (with replacement)
-    2. Calculate the statistic of interest
-    3. Repeat
-    4. Use repeated experiments to estimate the variability of your statistic of interest
+* 부트스트랩은 표준 오차와 같은 불확실성을 추정하는 매우 일반적인 접근 방식입니다.
+* 광범위한 모델 및 통계에 적용할 수 있습니다.
+* 이상치 및 모델 가정 위반에 강건합니다.
+* 기본 접근 방식:
+    1. 사용 가능한 표본(크기 $n$)을 사용하여 크기 $n$의 새 표본을 생성합니다(복원 추출).
+    2. 관심 있는 통계량을 계산합니다.
+    3. 반복합니다.
+    4. 반복된 실험을 사용하여 관심 있는 통계량의 변동성을 추정합니다.
 
-## The Bootstrap (schematic)
+## 부트스트랩 (개략도)
 
 <center>
 <img src="images/ISLR_Fig511.png" alt="ISLR_Fig511.png" style="width: 600px;"/>
 </center>
 
-# Exploratory data analysis
+# 탐색적 데이터 분석
 
-## Introduction
+## 소개
 
-> “The greatest value of a picture is when it forces us to notice what we never expected to see.” - John W. Tukey
+> "그림의 가장 큰 가치는 우리가 전혀 예상하지 못했던 것을 주목하게 만들 때입니다." - John W. Tukey
 
-- Discover biases, systematic errors and unexpected variability in data
-- Graphical approach to detecting these issues
-- Represents a first step in data analysis and guides hypothesis testing
-- Opportunities for discovery in the outliers
+- 데이터의 편향, 체계적 오류 및 예상치 못한 변동성을 발견합니다.
+- 이러한 문제를 감지하기 위한 그래픽 접근 방식입니다.
+- 데이터 분석의 첫 번째 단계를 나타내며 가설 검정을 안내합니다.
+- 이상치에서 발견의 기회가 있습니다.
 
-## Quantile Quantile Plots
+## 분위수-분위수 그림
 
-- Quantiles divide a distribution into equally sized bins
-- Division into 100 bins gives percentiles
-- Quantiles of a theoretical distribution are plotted against an experimental distribution
-    - alternatively, quantiles of two experimental distributions
-- Given a perfect fit, $x=y$
-- Useful in determining data distribution (normal, t, etc.)
+- 분위수는 분포를 동일한 크기의 구간으로 나눕니다.
+- 100개의 구간으로 나누면 백분위수가 됩니다.
+- 이론적 분포의 분위수를 실험적 분포에 대해 그립니다.
+    - 또는 두 실험적 분포의 분위수를 그립니다.
+- 완벽하게 적합하면 $x=y$입니다.
+- 데이터 분포(정규, t 등)를 결정하는 데 유용합니다.
 
-## Example: Quantile Quantile Plots
+## 예: 분위수-분위수 그림
 
 ```{r echo=FALSE, fig.width=8}
 suppressPackageStartupMessages(library(UsingR))
@@ -340,61 +338,61 @@ normalqs <- qnorm(ps, mean(x), popsd(x))
 par(mfrow = c(1, 3))
 plot(normalqs,
      qs,
-     xlab = "Normal Percentiles",
-     ylab = "Height Percentiles",
-     main = "Height Q-Q Plot")
+     xlab = "정규 백분위수",
+     ylab = "키 백분위수",
+     main = "키 Q-Q 그림")
 abline(0, 1)
-# t-distributed for 12 df
+# 12 df에 대한 t-분포
 x <- rt(1000, 12)
 qqnorm(x,
-       xlab = "t quantiles",
-       main = "T Quantiles (df=12) Q-Q Plot",
+       xlab = "t 분위수",
+       main = "T 분위수 (df=12) Q-Q 그림",
        ylim = c(-6, 6))
 qqline(x)
-# t-distributed for 3 df
+# 3 df에 대한 t-분포
 x <- rt(1000, 3)
 qqnorm(x,
-       xlab = "t quantiles",
-       main = "T Quantiles (df=3) Q-Q Plot",
+       xlab = "t 분위수",
+       main = "T 분위수 (df=3) Q-Q 그림",
        ylim = c(-6, 6))
 qqline(x)
 ```
 
-## Boxplots: About
+## 상자 그림: 정보
 
-- Provide a graph that is easy to interpret where data is not normally distributed
-- Would be an appropriate choice to explore income data, as distribution is highly skewed
-- Particularly informative in relation to outliers and range
-- Possible to compare multiple distributions side by side
+- 데이터가 정규 분포를 따르지 않는 경우 해석하기 쉬운 그래프를 제공합니다.
+- 분포가 매우 치우쳐 있으므로 소득 데이터를 탐색하는 데 적절한 선택입니다.
+- 특히 이상치 및 범위와 관련하여 유익합니다.
+- 여러 분포를 나란히 비교할 수 있습니다.
 
-## Boxplots: Example
+## 상자 그림: 예
 
 ```{r echo=FALSE, fig.width=8, fig.height=4}
 par(mfrow=c(1, 3))
-hist(exec.pay, main = "CEO Compensation")
-qqnorm(exec.pay, main = "CEO Compensation")
-boxplot(exec.pay, ylab="10,000s of dollars", ylim=c(0,400), main = "CEO Compensation")
+hist(exec.pay, main = "CEO 보수")
+qqnorm(exec.pay, main = "CEO 보수")
+boxplot(exec.pay, ylab="10,000달러", ylim=c(0,400), main = "CEO 보수")
 ```
 <center>
-Three different views of a continuous variable
+연속형 변수의 세 가지 다른 보기
 </center>
 
-## Scatterplots And Correlation: About
+## 산점도 및 상관 관계: 정보
 
-- For two continuous variables, scatter plot and calculation of correlation is useful
-- Provides a graphical and numeric estimation of relationships
-- Quick and easy with `plot()` and `cor()`
+- 두 개의 연속형 변수의 경우 산점도 및 상관 관계 계산이 유용합니다.
+- 관계의 그래픽 및 수치적 추정을 제공합니다.
+- `plot()` 및 `cor()`를 사용하여 빠르고 쉽습니다.
 
-## Scatterplots And Correlation: Example
+## 산점도 및 상관 관계: 예
 
 ```{r echo=FALSE, fig.width=8, fig.height=4}
 par(mfrow=c(1,3))
-plot(father.son$fheight, father.son$sheight,xlab="Father's height in inches",ylab="Son's height in inches",main=paste("correlation =",signif(cor(father.son$fheight, father.son$sheight),2)))
-plot(cars$speed, cars$dist,xlab="Speed",ylab="Stopping Distance",main=paste("correlation =",signif(cor(cars$speed, cars$dist),2)))
-plot(faithful$eruptions, faithful$waiting,xlab="Eruption Duration",ylab="Waiting Time",main=paste("correlation =",signif(cor(faithful$eruptions, faithful$waiting),2)))
+plot(father.son$fheight, father.son$sheight,xlab="아버지 키 (인치)",ylab="아들 키 (인치)",main=paste("상관 관계 =",signif(cor(father.son$fheight, father.son$sheight),2)))
+plot(cars$speed, cars$dist,xlab="속도",ylab="정지 거리",main=paste("상관 관계 =",signif(cor(cars$speed, cars$dist),2)))
+plot(faithful$eruptions, faithful$waiting,xlab="분출 지속 시간",ylab="대기 시간",main=paste("상관 관계 =",signif(cor(faithful$eruptions, faithful$waiting),2)))
 ```
 
-## Exploratory data analysis in high dimensions
+## 고차원에서의 탐색적 데이터 분석
 
 ```{r, echo=FALSE, message=FALSE}
 if(!require(GSE5859Subset)){
@@ -404,15 +402,15 @@ if(!require(GSE5859Subset)){
 
 ```{r}
 library(GSE5859Subset)
-data(GSE5859Subset) ##this loads three tables
+data(GSE5859Subset) ##this loads three tables # 세 개의 테이블을 로드합니다
 c(class(geneExpression), class(sampleInfo))
 rbind(dim(geneExpression), dim(sampleInfo))
 head(sampleInfo)
 ```
 
-## Volcano plots: Setup
+## 화산 그림: 설정
 
-T-test for every row (gene) of gene expression matrix:
+유전자 발현 행렬의 모든 행(유전자)에 대한 T-검정:
 ```{r, message=FALSE}
 library(genefilter)
 g <- factor(sampleInfo$group)
@@ -420,16 +418,16 @@ system.time(results <- rowttests(geneExpression, g))
 pvals <- results$p.value
 ```
 
-Note that these 8,793 tests are done in about 0.01s
+이 8,793개의 검정은 약 0.01초 만에 완료됩니다.
 
-## Volcano plots: Example
+## 화산 그림: 예
 
 ```{r, fig.height=3, fig.width=6}
 par(mar = c(4, 4, 0, 0))
 plot(results$dm,
      -log10(results$p.value),
-     xlab = "Effect size (difference in group means)",
-     ylab = "- log (base 10) p-values")
+     xlab = "효과 크기 (그룹 평균의 차이)",
+     ylab = "- log (밑 10) p-값")
 abline(h = -log10(0.05 / nrow(geneExpression)), col = "red")
 legend("bottomright",
        lty = 1,
@@ -437,15 +435,15 @@ legend("bottomright",
        legend = "Bonferroni = 0.05")
 ```
 
-## Volcano plots: Summary
+## 화산 그림: 요약
 
-- Many small p-values with small effect size indicate low within-group variability
-- Inspect for asymmetry
-- Can color points by significance threshold
+- 효과 크기가 작은 많은 작은 p-값은 그룹 내 변동성이 낮음을 나타냅니다.
+- 비대칭성을 검사합니다.
+- 유의성 임계값에 따라 점을 색칠할 수 있습니다.
 
-## P-value histograms: Setup
+## P-값 히스토그램: 설정
 
-- If all null hypotheses are true, expect a flat histogram of p-values:
+- 모든 귀무 가설이 참이면 p-값의 평평한 히스토그램이 예상됩니다.
 
 ```{r}
 m <- nrow(geneExpression)
@@ -455,7 +453,7 @@ randomData <- matrix(rnorm(n * m), m, n)
 nullpvals <- rowttests(randomData, g)$p.value
 ```
 
-## P-value histograms: Example
+## P-값 히스토그램: 예
 
 ```{r, echo=FALSE, fig.height=3}
 par(mfrow = c(1, 2))
@@ -463,9 +461,9 @@ hist(pvals, ylim = c(0, 1400))
 hist(nullpvals, ylim = c(0, 1400))
 ```
 
-## P-value histograms: Example 2 (permutation)
+## P-값 히스토그램: 예 2 (순열)
 
-Note that permuting these data doesn't produce an ideal null p-value histogram due to batch effects:
+이러한 데이터를 순열해도 배치 효과로 인해 이상적인 귀무 p-값 히스토그램이 생성되지 않습니다.
 
 ```{r, fig.height=3}
 permg <- sample(g)
@@ -473,21 +471,21 @@ permresults <- rowttests(geneExpression, permg)
 hist(permresults$p.value)
 ```
 
-## P-value histograms: Summary
+## P-값 히스토그램: 요약
 
-- Give a quick look at how many significant p-values there may be
-- When using permuted labels, can exposes non-independence among the samples
-    + can be due to batch effects or family structure
-- Most common approaches for correcting batch effects are:
-    + `ComBat`: corrects for known batch effects by linear model), and 
-    + `sva`: creates surrogate variables for unknown batch effects, corrects the structure of permutation p-values
-    + correction using control (housekeeping) genes
+- 얼마나 많은 유의미한 p-값이 있을 수 있는지 빠르게 살펴볼 수 있습니다.
+- 순열된 레이블을 사용할 때 표본 간의 비독립성을 노출할 수 있습니다.
+    + 배치 효과 또는 가족 구조 때문일 수 있습니다.
+- 배치 효과를 수정하는 가장 일반적인 접근 방식은 다음과 같습니다.
+    + `ComBat`: 선형 모델로 알려진 배치 효과를 수정합니다.
+    + `sva`: 알 수 없는 배치 효과에 대한 대리 변수를 만들고 순열 p-값의 구조를 수정합니다.
+    + 대조군(하우스키핑) 유전자를 사용한 수정
 
-All are available from the [sva](https://www.bioconductor.org/packages/sva) Bioconductor package
+모두 [sva](https://www.bioconductor.org/packages/sva) Bioconductor 패키지에서 사용할 수 있습니다.
 
-## MA plot
+## MA 그림
 
-- just a scatterplot rotated 45$^o$
+- 산점도를 45도 회전한 것입니다.
 
 ```{r, fig.height=3}
 rafalib::mypar(1, 2)
@@ -496,24 +494,24 @@ plot(geneExpression[, 1], pseudo)
 plot((geneExpression[, 1] + pseudo) / 2, (geneExpression[, 1] - pseudo))
 ```
 
-## MA plot: Summary
+## MA 그림: 요약
 
-- useful for quality control of high-dimensional data
-- plot all data values for a sample against another sample or a median "pseudosample"
-- `affyPLM::MAplots` better MA plots
-    - adds a smoothing line to highlight departures from horizontal line
-    - plots a "cloud" rather than many data points
+- 고차원 데이터의 품질 관리에 유용합니다.
+- 표본의 모든 데이터 값을 다른 표본 또는 중앙값 "유사 표본"에 대해 그립니다.
+- `affyPLM::MAplots` 더 나은 MA 그림
+    - 수평선으로부터의 이탈을 강조하기 위해 평활선을 추가합니다.
+    - 많은 데이터 포인트 대신 "구름"을 그립니다.
 
-## Heatmaps
+## 히트맵
 
-* Detailed representation of high-dimensional dataset.
-    - `ComplexHeatmap` package is the best as of 2023: large datasets, interactive heatmaps, simple defaults but many customizations possible
+* 고차원 데이터 세트의 상세한 표현.
+    - `ComplexHeatmap` 패키지는 2023년 현재 최고입니다: 대용량 데이터 세트, 대화형 히트맵, 간단한 기본값이지만 많은 사용자 지정이 가능합니다.
 
 ```{r, fig.width=12}
 suppressPackageStartupMessages(library(ComplexHeatmap))
-keep <- rank(apply(geneExpression, 1, var)) <= 100  # 500 most variable genes
+keep <- rank(apply(geneExpression, 1, var)) <= 100  # 500 most variable genes # 가장 변동성이 큰 500개 유전자
 ge <- geneExpression[keep, ]
-ge <- t(scale(t(ge))) #scale
+ge <- t(scale(t(ge))) #scale # 스케일링
 rownames(ge) <- NULL; colnames(ge) <- NULL
 chr <- sub("chr", "", geneAnnotation$CHR)
 chr[is.na(chr)] <- "Un"
@@ -527,48 +525,48 @@ column_ha <- HeatmapAnnotation(ethnicity = sampleInfo$ethnicity, group = factor(
 Heatmap(ge, use_raster = FALSE, top_annotation = column_ha, right_annotation = row_ha)
 ```
 
-## Heatmaps: Summary
+## 히트맵: 요약
 
-- Clustering becomes slow and memory-intensivefor thousands of rows
-    - probably too detailed for thousands of rows
-- can show co-expressed genes, groups of samples
+- 수천 개의 행에 대해 클러스터링이 느려지고 메모리 집약적이 됩니다.
+    - 아마도 수천 개의 행에는 너무 상세할 것입니다.
+- 공동 발현 유전자, 표본 그룹을 표시할 수 있습니다.
 
-## Colors
+## 색상
 
-- Types of color pallettes: 
-    - **sequential**: shows a gradient
-    - **diverging**: goes in two directions from a center
-    - **qualitative**: for categorical variables
-- Keep color blindness in mind (10% of all men)
+- 색상 팔레트 유형:
+    - **순차적**: 그라데이션을 표시합니다.
+    - **발산적**: 중심에서 두 방향으로 이동합니다.
+    - **질적**: 범주형 변수에 사용됩니다.
+- 색맹을 염두에 두십시오(모든 남성의 10%).
 
-## Colors (cont'd)
+## 색상 (계속)
 
-Combination of `RColorBrewer` package and `colorRampPalette()` can create anything you want
+`RColorBrewer` 패키지와 `colorRampPalette()`를 조합하면 원하는 모든 것을 만들 수 있습니다.
 
 ```{r, fig.height=5, echo=FALSE}
 rafalib::mypar(1, 1)
 RColorBrewer::display.brewer.all(n = 7)
 ```
 
-## Plots To Avoid
+## 피해야 할 그림
 
-> "Pie charts are a very bad way of displaying information." - R Help
+> "원형 차트는 정보를 표시하는 매우 나쁜 방법입니다." - R 도움말
 
-- Always avoid pie charts
-- Avoid doughnut charts too
-- Avoid pseudo 3D and most Excel defaults
-- Effective graphs use color judiciously
+- 항상 원형 차트를 피하십시오.
+- 도넛 차트도 피하십시오.
+- 가짜 3D 및 대부분의 Excel 기본값을 피하십시오.
+- 효과적인 그래프는 색상을 신중하게 사용합니다.
 
-## Lab
+## 실습
 
-* [Permutation Test exercises](https://genomicsclass.github.io/book/pages/permutation_tests_exercises.html)
-* [Association Test exercises](https://genomicsclass.github.io/book/pages/association_tests_exercises.html)
-* [EDA exercises **1-3 only**](https://genomicsclass.github.io/book/pages/exploratory_data_analysis_exercises.html)
+* [순열 검정 연습 문제](https://genomicsclass.github.io/book/pages/permutation_tests_exercises.html)
+* [연관성 검정 연습 문제](https://genomicsclass.github.io/book/pages/association_tests_exercises.html)
+* [EDA 연습 문제 **1-3만**](https://genomicsclass.github.io/book/pages/exploratory_data_analysis_exercises.html)
 
-## Links
+## 링크
 
-- A built [html][] version of this lecture is available.
-- The [source][] R Markdown is also available from Github.
+- 이 강의의 빌드된 [html][] 버전이 제공됩니다.
+- [소스][] R Markdown은 Github에서도 제공됩니다.
 
 [html]: https://rpubs.com/lwaldron/AppStatBio2023_day2
 [source]: https://github.com/waldronlab/AppStatBio

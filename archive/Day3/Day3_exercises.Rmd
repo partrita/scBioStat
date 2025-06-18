@@ -1,5 +1,5 @@
 ---
-title: "Interactions and Contrasts exercise"
+title: "상호작용 및 대비 연습문제"
 output:
   html_document:
     df_print: paged
@@ -8,49 +8,49 @@ editor_options:
 ---
 
 
-# Design Formula Exercise
+# 설계 공식 연습문제
 
 http://genomicsclass.github.io/book/pages/expressing_design_formula_exercises.html
 
-Suppose we have an experiment with the following design: on three different days, we perform an experiment with two treated and two control units. We then measure some outcome $Y_i$, and we want to test the effect of treatment as well the effects of different days (perhaps the temperature in the lab affects the measuring device). Assume that the true condition effect is the same for each day (no interaction between condition and day). We then define factors in R for day and for condition.
+다음과 같은 설계의 실험이 있다고 가정해 보겠습니다: 서로 다른 3일 동안 처리군 2개와 대조군 2개로 실험을 수행합니다. 그런 다음 어떤 결과 $Y_i$를 측정하고, 처리 효과와 다른 날짜의 효과(아마도 실험실 온도가 측정 장치에 영향을 미칠 수 있음)를 검정하려고 합니다. 실제 조건 효과는 매일 동일하다고 가정합니다(조건과 날짜 간의 상호작용 없음). 그런 다음 R에서 날짜와 조건에 대한 요인을 정의합니다.
 
-* condition/day	A	B	C
-* treatment	2	2	2
-* control	2	2	2
+* 조건/날짜	A	B	C
+* 처리군	2	2	2
+* 대조군	2	2	2
 
-## Question 1
+## 질문 1
 
-Given the factors we have defined above and without defining any new ones, which of the following R formula will produce a design matrix (model matrix) that lets us analyze the effect of condition, controlling for the different days?
+위에서 정의한 요인을 고려하고 새로운 요인을 정의하지 않은 경우, 다음 R 공식 중 어떤 것이 다른 날짜를 제어하면서 조건의 효과를 분석할 수 있는 설계 행렬(모델 행렬)을 생성합니까?
 
 * A) ~ day + condition
 * B) ~ condition ~ day
 * C) ~ A + B + C + control + treated
 * D) ~ B + C + treated
 
-Remember that using the ~ and the names for the two variables we want in the model will produce a design matrix controlling for all levels of day and all levels of condition. We do not use the levels in the design formula.
+모델에 원하는 두 변수의 이름과 ~를 사용하면 날짜의 모든 수준과 조건의 모든 수준을 제어하는 설계 행렬이 생성된다는 점을 기억하십시오. 설계 공식에는 수준을 사용하지 않습니다.
 
 
 
-# Interactions and contrasts
+# 상호작용 및 대비
 
-From: http://genomicsclass.github.io/book/pages/interactions_and_contrasts_exercises.html
+출처: http://genomicsclass.github.io/book/pages/interactions_and_contrasts_exercises.html
 
-## Question 2
+## 질문 2
 
 ```{r}
 species <- factor(c("A","A","B","B"))
 condition <- factor(c("control","treated","control","treated"))
 ```
 
-Suppose we want to build a contrast of coefficients for the above experimental design.
+위의 실험 설계에 대한 계수의 대비를 만들고 싶다고 가정해 보겠습니다.
 
-You can either figure this question out by looking at the design matrix, or by using the contrast function from the contrast library with random numbers for y. The contrast vector will be returned as contrast(...)$X.
+설계 행렬을 보거나 y에 대한 임의의 숫자로 contrast 라이브러리의 contrast 함수를 사용하여 이 질문을 해결할 수 있습니다. 대비 벡터는 contrast(...)$X로 반환됩니다.
 
-What should the contrast vector be, to obtain the difference between the species B control group and the species A treatment group (species B control - species A treatment)? Assume that the coefficients (columns of design matrix) are: Intercept, speciesB, conditiontreated.
+종 B 대조군과 종 A 처리군 간의 차이(종 B 대조군 - 종 A 처리군)를 얻기 위한 대비 벡터는 무엇이어야 합니까? 계수(설계 행렬의 열)가 절편, speciesB, conditiontreated라고 가정합니다.
 
-## Question 3
+## 질문 3
 
-Use the Rmd script to load the spider dataset. Suppose we build a model using two variables: `~ type + leg`.
+Rmd 스크립트를 사용하여 거미 데이터 세트를 로드합니다. 두 변수 `~ type + leg`를 사용하여 모델을 구축한다고 가정해 보겠습니다.
 
 ```{r}
 url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/spider_wolff_gorb_2013.csv"
@@ -60,25 +60,25 @@ if (!file.exists(filename))
     download(url, filename)
 spider <- read.csv(filename, skip=1)
 ```
-What is the t-statistic for the contrast of leg pair L4 vs. leg pair L2?
+다리 쌍 L4 대 다리 쌍 L2의 대비에 대한 t-statistic은 무엇입니까?
 
-## Question 4
+## 질문 4
 
-Suppose that we notice that the within-group variances for the groups with smaller frictional coefficients are generally smaller, and so we try to apply a transformation to the frictional coefficients to make the within-group variances more constant.
+마찰 계수가 작은 그룹의 그룹 내 분산이 일반적으로 더 작다는 것을 알게 되어 마찰 계수에 변환을 적용하여 그룹 내 분산을 더 일정하게 만들려고 한다고 가정해 보겠습니다.
 
-Add a new variable log2friction to the spider dataframe:
+spider 데이터프레임에 log2friction이라는 새 변수를 추가합니다:
 
 ```{r}
 spider$log2friction <- log2(spider$friction)
 ```
 
-The Y values now look like:
+이제 Y 값은 다음과 같습니다:
 
 ```{r}
 boxplot(log2friction ~ type*leg, data=spider)
 ```
 
-Run a linear model of log2friction with type, leg and interactions between type and leg.
+type, leg 및 type과 leg 간의 상호작용을 사용하여 log2friction의 선형 모델을 실행합니다.
 
 ```{r}
 spider$leg <- relevel(spider$leg, ref="L1")
@@ -86,18 +86,17 @@ fit <- lm(log2friction ~ type*leg, data=spider)
 ```
 
 
-What is the t-statistic for the interaction of type push and leg L4? If this t-statistic is sufficiently large, we would reject the null hypothesis that the push vs. pull effect on log2(friction) is the same in L4 as in L1.
+type push와 leg L4의 상호작용에 대한 t-statistic은 무엇입니까? 이 t-statistic이 충분히 크면 log2(friction)에 대한 push 대 pull 효과가 L4에서 L1과 동일하다는 귀무 가설을 기각합니다.
 
 
-## Question 5
+## 질문 5
 
-Using the same analysis of log2 transformed data, what is the F-value for all of the type:leg interaction terms in an ANOVA? If this value is sufficiently large, we would reject the null hypothesis that the push vs. pull effect on log2(friction) is the same for all leg pairs.
+log2 변환된 데이터의 동일한 분석을 사용하여 ANOVA에서 모든 type:leg 상호작용 항에 대한 F-value는 무엇입니까? 이 값이 충분히 크면 log2(friction)에 대한 push 대 pull 효과가 모든 다리 쌍에 대해 동일하다는 귀무 가설을 기각합니다.
 
-## Question 6
+## 질문 6
 
-What is the L2 vs. L1 estimate in log2(friction) for the pull samples?
+pull 표본에 대한 log2(friction)에서 L2 대 L1 추정치는 무엇입니까?
 
-## Question 7
+## 질문 7
 
-What is the L2 vs. L1 estimate in log2(friction) for the push samples? Remember, because of the interaction terms, this is not the same as the L2 vs L1 difference for the pull samples. If you’re not sure use the contrast function. Another hint: consider the arrows plot for the model with interactions.
-
+push 표본에 대한 log2(friction)에서 L2 대 L1 추정치는 무엇입니까? 상호작용 항 때문에 이것은 pull 표본에 대한 L2 대 L1 차이와 동일하지 않다는 것을 기억하십시오. 확실하지 않으면 contrast 함수를 사용하십시오. 또 다른 힌트: 상호작용이 있는 모델에 대한 화살표 그림을 고려하십시오.

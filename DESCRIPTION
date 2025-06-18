@@ -1,10 +1,10 @@
 Package: AppStatBio
-Title: Course Materials for Applied Statistics for High-throughput Biology
+Title: 대용량 생물학을 위한 응용 통계 강의 자료
 Version: 0.0.0.9000
 Authors@R: 
     person("Levi", "Waldron", , "levi.waldron@sph.cuny.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2725-0694"))
-Description: Provides lecture materials for Applied Statistics for High-throughput Biology
+Description: 대용량 생물학을 위한 응용 통계 강의 자료를 제공합니다
 License: `use_ccby_license()`
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

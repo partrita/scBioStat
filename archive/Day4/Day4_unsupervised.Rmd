@@ -1,6 +1,5 @@
-
 ---
-title: 'Applied Statistics for High-throughput Biology Day 4'
+title: '응용 통계학: 대용량 생물학을 위한 제4일차'
 author: "Levi Waldron"
 output: slidy_presentation
 ---
@@ -9,33 +8,33 @@ output: slidy_presentation
 knitr::opts_chunk$set(eval = TRUE, cache=TRUE)
 ```
 
-## Day 4 outline
+## 제4일차 개요
 
-[Book](https://genomicsclass.github.io/book/) chapter 8:
+[교재](https://genomicsclass.github.io/book/) 8장:
 
-- Distances in high dimensions
-- Principal Components Analysis and Singular Value Decomposition
-- Multidimensional Scaling
-- Batch Effects (Chapter 10)
+- 고차원에서의 거리
+- 주성분 분석 및 특이값 분해
+- 다차원 척도법
+- 배치 효과 (10장)
 
-## Metrics and distances
+## 측정 지표와 거리
 
-A **metric** satisfies the following five properties:
+**측정 지표**는 다음 다섯 가지 속성을 만족합니다:
 
-1. non-negativity $d(a, b) \ge 0$
-2. symmetry $d(a, b) = d(b, a)$
-3. identification mark $d(a, a) = 0$
-4. definiteness $d(a, b) = 0$ if and only if $a=b$
-5. triangle inequality $d(a, b) + d(b, c) \ge d(a, c)$
+1. 비음수성 $d(a, b) \ge 0$
+2. 대칭성 $d(a, b) = d(b, a)$
+3. 동일성 표시 $d(a, a) = 0$
+4. 한정성 $d(a, b) = 0$은 $a=b$인 경우에만 해당
+5. 삼각 부등식 $d(a, b) + d(b, c) \ge d(a, c)$
 
-- A **distance** is only required to satisfy 1-3.
-- A **similarity function** satisfies 1-2, and **increases** as $a$ and $b$ become more similar
-- A **dissimilarity function** satisfies 1-2, and **decreases** as $a$ and $b$ become more similar
+- **거리**는 1-3만 만족하면 됩니다.
+- **유사도 함수**는 1-2를 만족하며 $a$와 $b$가 유사해질수록 **증가**합니다.
+- **비유사도 함수**는 1-2를 만족하며 $a$와 $b$가 유사해질수록 **감소**합니다.
 
 
-## Euclidian distance (metric)
+## 유클리드 거리 (측정 지표)
 
-- Remember grade school:
+- 초등학교 시절을 기억해 보세요:
 ```{r, echo=FALSE, fig.height=3.5}
 rafalib::mypar()
 plot(
@@ -58,12 +57,12 @@ text(-0.1, 0, "A", cex = 2)
 text(1.1, 1, "B", cex = 2)
 ```
 <center>
-Euclidean d = $\sqrt{ (A_x-B_x)^2 + (A_y-B_y)^2}$.
+유클리드 거리 d = $\sqrt{ (A_x-B_x)^2 + (A_y-B_y)^2}$.
 </center>
 
-- **Side note**: also referred to as *$L_2$ norm*
+- **참고**: *$L_2$ 노름*이라고도 합니다.
 
-## Euclidian distance in high dimensions
+## 고차원에서의 유클리드 거리
 
 ```{r, echo = FALSE, message=FALSE}
 if(!require(tissuesGeneExpression)){
@@ -75,39 +74,39 @@ if(!require(GSE5859)){
 ```
 
 ```{r}
-## BiocManager::install("genomicsclass/tissuesGeneExpression") #if needed
-## BiocManager::install("genomicsclass/GSE5859") #if needed
+## BiocManager::install("genomicsclass/tissuesGeneExpression") # 필요한 경우
+## BiocManager::install("genomicsclass/GSE5859") # 필요한 경우
 library(GSE5859)
 library(tissuesGeneExpression)
 data(tissuesGeneExpression)
-dim(e) ##gene expression data
-table(tissue) ##tissue[i] corresponds to e[,i]
+dim(e) ##gene expression data # 유전자 발현 데이터
+table(tissue) ##tissue[i] corresponds to e[,i] # tissue[i]는 e[,i]에 해당
 ```
 
-Interested in identifying similar *samples* and similar *genes*
+유사한 *표본*과 유사한 *유전자*를 식별하는 데 관심이 있습니다.
 
-## Notes about Euclidian distance in high dimensions
+## 고차원에서의 유클리드 거리에 대한 참고 사항
 
-- Points are no longer on the Cartesian plane
-- instead they are in higher dimensions. For example:
-    - sample $i$ is defined by a point in 22,215 dimensional space: $(Y_{1,i},\dots,Y_{22215,i})^\top$. 
-    - feature $g$ is defined by a point in 189 dimensions $(Y_{g,189},\dots,Y_{g,189})^\top$
+- 점들은 더 이상 데카르트 평면에 있지 않습니다.
+- 대신 더 높은 차원에 있습니다. 예를 들어:
+    - 표본 $i$는 22,215차원 공간의 한 점으로 정의됩니다: $(Y_{1,i},\dots,Y_{22215,i})^\top$.
+    - 특징 $g$는 189차원 공간의 한 점으로 정의됩니다: $(Y_{g,189},\dots,Y_{g,189})^\top$.
 
-Euclidean distance as for two dimensions. E.g., the distance between two samples $i$ and $j$ is:
+2차원과 마찬가지로 유클리드 거리. 예: 두 표본 $i$와 $j$ 사이의 거리는 다음과 같습니다:
 
 $$ \mbox{dist}(i,j) = \sqrt{ \sum_{g=1}^{22215} (Y_{g,i}-Y_{g,j })^2 } $$
 
-and the distance between two features $h$ and $g$ is:
+그리고 두 특징 $h$와 $g$ 사이의 거리는 다음과 같습니다:
 
 $$ \mbox{dist}(h,g) = \sqrt{ \sum_{i=1}^{189} (Y_{h,i}-Y_{g,i})^2 } $$
 
-## Euclidian distance in matrix algebra notation
+## 행렬 대수 표기법에서의 유클리드 거리
 
-The Euclidian distance between samples $i$ and $j$ can be written as:
+표본 $i$와 $j$ 사이의 유클리드 거리는 다음과 같이 쓸 수 있습니다:
 
 $$ \mbox{dist}(i,j) = \sqrt{ (\mathbf{Y}_i - \mathbf{Y}_j)^\top(\mathbf{Y}_i - \mathbf{Y}_j) }$$
 
-with $\mathbf{Y}_i$ and $\mathbf{Y}_j$ columns $i$ and $j$. 
+여기서 $\mathbf{Y}_i$와 $\mathbf{Y}_j$는 각각 $i$열과 $j$열입니다.
 
 ```{r}
 t(matrix(1:3, ncol = 1))
@@ -115,14 +114,14 @@ matrix(1:3, ncol = 1)
 t(matrix(1:3, ncol = 1)) %*% matrix(1:3, ncol = 1)
 ```
 
-## Note about matrix algebra in R 
+## R의 행렬 대수에 대한 참고 사항
 
-* R is very efficient at matrix algebra
-* for very large matricies, see the:
-    + [Matrix](https://CRAN.R-project.org/package=Matrix) CRAN package (sparse matrices)
-    + [rhdf5](https://bioconductor.org/packages/rhdf5/) and [DelayedArray](https://bioconductor.org/packages/DelayedArray/) Bioconductor package (on-disk arrays)
+* R은 행렬 대수에 매우 효율적입니다.
+* 매우 큰 행렬의 경우 다음을 참조하십시오:
+    + [Matrix](https://CRAN.R-project.org/package=Matrix) CRAN 패키지 (희소 행렬)
+    + [rhdf5](https://bioconductor.org/packages/rhdf5/) 및 [DelayedArray](https://bioconductor.org/packages/DelayedArray/) Bioconductor 패키지 (디스크 상의 배열)
 
-## 3 sample example
+## 3개 표본 예시
 
 ```{r}
 kidney1 <- e[, 1]
@@ -132,7 +131,7 @@ sqrt(sum((kidney1 - kidney2) ^ 2))
 sqrt(sum((kidney1 - colon1) ^ 2))
 ```
 
-## 3 sample example using dist()
+## dist()를 사용한 3개 표본 예시
 
 ```{r}
 dim(e)
@@ -140,43 +139,42 @@ dim(e)
 class(d)
 ```
 
-## The dist() function
+## dist() 함수
 
-Excerpt from ?dist:
+?dist 발췌:
 
 ```{r, eval=FALSE}
 dist(
     x,
-    method = "euclidean",
-    diag = FALSE,
-    upper = FALSE,
-    p = 2
+    method = "euclidean", # 거리 측정 방법: "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski" 중 하나
+    diag = FALSE, # 대각 행렬 요소 포함 여부
+    upper = FALSE, # 상삼각 행렬 요소 포함 여부
+    p = 2 # 민코프스키 거리에 대한 거듭제곱 (method = "minkowski"일 때만 사용)
 )
 ```
 
-- **method:** the distance measure to be used. 
-    - This must be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski". Any unambiguous substring can be given.
-- `dist` class output from `dist()` is used for many clustering algorithms and heatmap functions
+- **method:** 사용할 거리 측정 방법입니다.
+    - "euclidean", "maximum", "manhattan", "canberra", "binary" 또는 "minkowski" 중 하나여야 합니다. 모호하지 않은 하위 문자열을 지정할 수 있습니다.
+- `dist()`의 `dist` 클래스 출력은 많은 군집화 알고리즘과 히트맵 함수에 사용됩니다.
 
-*Caution*: `dist(e)` creates a `r nrow(e)` x `r nrow(e)` matrix that will probably crash your R session.
+*주의*: `dist(e)`는 `r nrow(e)` x `r nrow(e)` 행렬을 생성하며, 이는 R 세션을 중단시킬 수 있습니다.
 
-## Note on standardization
+## 표준화에 대한 참고 사항
 
-- In practice, features (e.g. genes) are typically "standardized", *i.e.* converted to z-score:
+- 실제로는 특징(예: 유전자)이 일반적으로 "표준화"됩니다. 즉, z-점수로 변환됩니다:
 
 $$x_{gi} \leftarrow \frac{(x_{gi} - \bar{x}_g)}{s_g}$$
 
-- This is done because the differences in overall levels between features are often not due to biological effects but technical ones, *e.g.*:
-    - GC bias, PCR amplification efficiency, ...
-- Euclidian distance and $1-r$ (Pearson cor) are related:
+- 이는 특징 간의 전체 수준 차이가 종종 생물학적 효과가 아닌 기술적 효과(예: GC 편향, PCR 증폭 효율 등) 때문이기 때문입니다.
+- 유클리드 거리와 $1-r$(피어슨 상관 계수)은 관련이 있습니다:
     - $\frac{d_E(x, y)^2}{2m} = 1 - r_{xy}$
-    - $m$ = # dimensions
+    - $m$ = 차원 수
 
-## Dimension reduction and PCA
+## 차원 축소 및 PCA
 
-* Motivation for dimension reduction
+* 차원 축소의 동기
 
-Simulate the heights of twin pairs:
+쌍둥이 키 시뮬레이션:
 ```{r}
 set.seed(1)
 n <- 100
@@ -185,13 +183,13 @@ dim(y)
 cor(t(y))
 ```
 
-## Visualizing twin pairs data
+## 쌍둥이 데이터 시각화
 
 ```{r, echo=FALSE}
-z1 = (y[1,] + y[2,]) / 2 #the sum
-z2 = (y[1,] - y[2,])   #the difference
+z1 = (y[1,] + y[2,]) / 2 #the sum # 합계
+z2 = (y[1,] - y[2,])   #the difference # 차이
 
-z = rbind(z1, z2) #matrix now same dimensions as y
+z = rbind(z1, z2) #matrix now same dimensions as y # 이제 y와 동일한 차원의 행렬
 
 thelim <- c(-3, 3)
 rafalib::mypar(1, 2)
@@ -199,11 +197,11 @@ rafalib::mypar(1, 2)
 plot(
     y[1,],
     y[2,],
-    xlab = "Twin 1 (standardized height)",
-    ylab = "Twin 2 (standardized height)",
+    xlab = "쌍둥이 1 (표준화된 키)",
+    ylab = "쌍둥이 2 (표준화된 키)",
     xlim = thelim,
     ylim = thelim,
-    main = "Original twin heights"
+    main = "원본 쌍둥이 키"
 )
 points(y[1, 1:2], y[2, 1:2], col = 2, pch = 16)
 
@@ -212,32 +210,32 @@ plot(
     z[2,],
     xlim = thelim,
     ylim = thelim,
-    xlab = "Average height",
-    ylab = "Difference in height",
-    main = "Manual PCA-like projection"
+    xlab = "평균 키",
+    ylab = "키 차이",
+    main = "수동 PCA 유사 투영"
 )
 points(z[1, 1:2] , z[2, 1:2], col = 2, pch = 16)
 ```
 
-## Not much distance is lost in the second dimension
+## 두 번째 차원에서는 거리가 많이 손실되지 않습니다.
 
 ```{r, echo=FALSE}
 rafalib::mypar()
 d = dist(t(y))
-d3 = dist(z[1, ]) * sqrt(2) ##distance computed using just first dimension mypar(1,1)
+d3 = dist(z[1, ]) * sqrt(2) ##distance computed using just first dimension mypar(1,1) # 첫 번째 차원만 사용하여 계산된 거리
 plot(as.numeric(d),
      as.numeric(d3),
-     xlab = "Pairwise distances in 2 dimensions",
-     ylab = "Pairwise distances in 1 dimension")
+     xlab = "2차원에서의 쌍별 거리",
+     ylab = "1차원에서의 쌍별 거리")
 abline(0, 1, col = "red")
 ```
 
-- Not much loss of height differences when just using average heights of twin pairs.
-    - because twin heights are highly correlated
+- 쌍둥이 키의 평균 키만 사용할 경우 키 차이가 많이 손실되지 않습니다.
+    - 쌍둥이 키는 상관 관계가 매우 높기 때문입니다.
 
-## Singular Value Decomposition (SVD)
+## 특이값 분해 (SVD)
 
-SVD generalizes the example rotation we looked at:
+SVD는 우리가 살펴본 예시 회전을 일반화합니다:
 
 $$\mathbf{Y} = \mathbf{UDV}^\top$$
 
@@ -245,17 +243,17 @@ $$\mathbf{Y} = \mathbf{UDV}^\top$$
 <img src="SVD1.png" alt="SVD" align="middle" style="height: 350px;">
 </center>
 
-- **note**: the above formulation is for $m$ rows $> n$ columns
+- **참고**: 위 공식은 $m$ 행 > $n$ 열인 경우에 해당합니다.
 
-- $\mathbf{Y}$: the $m$ rows x $n$ cols matrix of measurements
-- $\mathbf{U}$: $m \times n$ matrix relating original scores to PCA scores (**loadings**)
-- $\mathbf{D}$: $n \times n$ diagonal matrix (**eigenvalues**)
-- $\mathbf{V}$: $n \times n$ *orthogonal* matrix (**eigenvectors or PCA scores**)
-    - orthogonal = unit length and "perpendicular" in 3-D
+- $\mathbf{Y}$: $m$ 행 x $n$ 열 측정값 행렬
+- $\mathbf{U}$: $m \times n$ 행렬, 원본 점수를 PCA 점수와 연관시킴 (**가중치**)
+- $\mathbf{D}$: $n \times n$ 대각 행렬 (**고유값**)
+- $\mathbf{V}$: $n \times n$ *직교* 행렬 (**고유 벡터 또는 PCA 점수**)
+    - 직교 = 단위 길이 및 3차원에서 "수직"
 
-## SVD of gene expression dataset
+## 유전자 발현 데이터 세트의 SVD
 
-Scaling:
+척도 조정:
 ```{r, cache=TRUE}
 system.time(e.standardize.slow <-
                 t(apply(e, 1, function(x)
@@ -270,20 +268,20 @@ s <- svd(e.standardize.fast)
 names(s)
 ```
 
-## Components of SVD results
+## SVD 결과의 구성 요소
 
 ```{r}
-dim(s$u)     # loadings
-length(s$d)  # eigenvalues
-dim(s$v)     # d %*% vT = scores
+dim(s$u)     # loadings # 가중치
+length(s$d)  # eigenvalues # 고유값
+dim(s$v)     # d %*% vT = scores # 점수
 ```
 <center>
 <img src="SVD1.png" alt="SVD" align="middle" style="height: 200px;">
 </center>
 
-## PCA is a SVD
+## PCA는 SVD입니다
 
-* gene expression dataset
+* 유전자 발현 데이터 세트
 
 ```{r, cache=TRUE}
 rafalib::mypar()
@@ -291,28 +289,28 @@ p <- prcomp(t(e.standardize.fast))
 plot(s$u[, 1] ~ p$rotation[, 1])
 ```
 
-**Lesson:** u and v can each be multiplied by -1 arbitrarily
+**교훈:** u와 v는 각각 -1을 임의로 곱할 수 있습니다.
 
-## PCA interpretation: loadings
+## PCA 해석: 가중치
 
 <center>
 <img src="SVD1.png" alt="SVD" align="middle" style="height: 225px;">
 </center>
 
-- $\mathbf{U}$ (**loadings**): relate the *principal component* axes to the original variables
-    - think of principal component axes as a weighted combination of original axes
+- $\mathbf{U}$ (**가중치**): *주성분* 축을 원본 변수와 연관시킵니다.
+    - 주성분 축을 원본 축의 가중 조합으로 생각하십시오.
 
-## Visualizing PCA loadings
+## PCA 가중치 시각화
 
 ```{r}
 plot(p$rotation[, 1],
-     xlab = "Index of genes",
-     ylab = "Loadings of PC1",
-     main = "PC1 loadings of each gene") #or, predict(p)
+     xlab = "유전자 색인",
+     ylab = "PC1 가중치",
+     main = "각 유전자의 PC1 가중치") #or, predict(p) # 또는 predict(p)
 abline(h = c(-0.03, 0.03), col = "red")
 ```
 
-## Genes with high PC1 loadings
+## PC1 가중치가 높은 유전자
 
 ```{r, fig.height=3.5}
 e.pc1genes <-
@@ -320,15 +318,15 @@ e.pc1genes <-
                            p$rotation[, 1] > 0.03,]
 pheatmap::pheatmap(
     e.pc1genes,
-    scale = "none",
-    show_rownames = TRUE,
-    show_colnames = FALSE
+    scale = "none", # 척도 조정 없음
+    show_rownames = TRUE, # 행 이름 표시
+    show_colnames = FALSE # 열 이름 표시 안 함
 )
 ```
 
-## PCA interpretation: eigenvalues
+## PCA 해석: 고유값
 
-- $\mathbf{D}$ (**eigenvalues**): standard deviation scaling factor that each decomposed variable is multiplied by.
+- $\mathbf{D}$ (**고유값**): 각 분해된 변수에 곱해지는 표준 편차 척도 인수입니다.
 
 ```{r, fig.height=3, fig.width=5, echo=TRUE, fig.align='center'}
 rafalib::mypar()
@@ -336,36 +334,36 @@ plot(
     p$sdev ^ 2 / sum(p$sdev ^ 2) * 100,
     xlim = c(0, 150),
     type = "b",
-    ylab = "% variance explained",
-    main = "Screeplot"
+    ylab = "설명된 분산 비율 (%)",
+    main = "스크리 그림"
 )
 ```
 
-## PCA interpretation: eigenvalues
+## PCA 해석: 고유값
 
-Alternatively as cumulative % variance explained (using `cumsum()` function)
+또는 누적 설명 분산 비율 ( `cumsum()` 함수 사용)
 
 ```{r, fig.height=4, echo=TRUE, fig.align='center'}
 rafalib::mypar()
 plot(
     cumsum(p$sdev ^ 2) / sum(p$sdev ^ 2) * 100,
-    ylab = "cumulative % variance explained",
+    ylab = "누적 설명 분산 비율 (%)",
     ylim = c(0, 100),
     type = "b",
-    main = "Cumulative screeplot"
+    main = "누적 스크리 그림"
 )
 ```
 
-## PCA interpretation: scores
+## PCA 해석: 점수
 
 <center>
 <img src="SVD1.png" alt="SVD" align="middle" style="height: 225px;">
 </center>
 
-- $\mathbf{V}$ (**scores**): The "datapoints" in the reduced prinipal component space
-- In some implementations (like `prcomp()`), scores are already scaled by eigenvalues: $\mathbf{D V^T}$
+- $\mathbf{V}$ (**점수**): 축소된 주성분 공간의 "데이터 포인트"입니다.
+- 일부 구현(예: `prcomp()`)에서는 점수가 이미 고유값으로 척도 조정되었습니다: $\mathbf{D V^T}$
 
-## PCA interpretation: scores
+## PCA 해석: 점수
 
 ```{r, fig.height=5, echo=FALSE}
 rafalib::mypar()
@@ -373,7 +371,7 @@ plot(
     p$x[, 1:2],
     xlab = "PC1",
     ylab = "PC2",
-    main = "plot of p$x[, 1:2]",
+    main = "p$x[, 1:2] 그림",
     col = factor(tissue),
     pch = as.integer(factor(tissue))
 )
@@ -386,11 +384,11 @@ legend(
 )
 ```
 
-## Multi-dimensional Scaling (MDS)
+## 다차원 척도법 (MDS)
 
-- also referred to as Principal Coordinates Analysis (PCoA)
-- a reduced SVD, performed on a distance matrix
-- identify two (or more) eigenvalues/vectors that preserve distances
+- 주좌표 분석 (PCoA)이라고도 합니다.
+- 거리 행렬에서 수행되는 축소된 SVD입니다.
+- 거리를 보존하는 두 개 이상의 고유값/고유 벡터를 식별합니다.
 
 ```{r}
 d <- as.dist(1 - cor(e.standardize.fast))
@@ -409,33 +407,33 @@ legend(
 )
 ```
 
-## Summary: distances and dimension reduction
+## 요약: 거리 및 차원 축소
 
-- **Note**: signs of eigenvalues (square to get variances) and eigenvectors (loadings) can be arbitrarily flipped
-- PCA and MDS are useful for dimension reduction when you have **correlated variables**
-- Variables are always centered.  
-- Variables are also scaled unless you know they have the same scale in the population
-- PCA projection can be applied to new datasets if you know the matrix calculations
-- PCA is subject to over-fitting, screeplot can be tested by cross-validation
+- **참고**: 고유값(제곱하여 분산 구함)과 고유 벡터(가중치)의 부호는 임의로 뒤집힐 수 있습니다.
+- PCA와 MDS는 **상관 관계가 있는 변수**가 있을 때 차원 축소에 유용합니다.
+- 변수는 항상 중앙에 맞춰집니다.
+- 변수는 모집단에서 동일한 척도를 갖는다는 것을 알지 못하는 한 척도 조정됩니다.
+- 행렬 계산을 알고 있다면 PCA 투영을 새 데이터 세트에 적용할 수 있습니다.
+- PCA는 과적합되기 쉬우므로 스크리 그림은 교차 검증으로 테스트할 수 있습니다.
 
-## PCA and MDS Exercises
+## PCA 및 MDS 연습문제
 
-1. Repeat the PCA after removing half of the features with lowest variance. Does it look any different?
-2. Repeat the MDS, using Spearman correlation instead of Pearson correlation. Does it look any different?
+1. 분산이 가장 낮은 특징의 절반을 제거한 후 PCA를 반복합니다. 다르게 보이나요?
+2. 피어슨 상관 관계 대신 스피어만 상관 관계를 사용하여 MDS를 반복합니다. 다르게 보이나요?
 
-## Batch Effects
+## 배치 효과
 
-- pervasive in genomics (e.g. [Leek *et al.* Nat Rev Genet. 2010 Oct;11(10):733-9.](https://www.ncbi.nlm.nih.gov/pubmed/?term=20838408))
-- affect DNA and RNA sequencing, proteomics, imaging, microarray...
-- have caused high-profile problems and retractions
-    - you can't get rid of them
-    - but you can make sure they are not confounded with your experiment
+- 유전체학에서 널리 퍼져 있습니다 (예: [Leek *et al.* Nat Rev Genet. 2010 Oct;11(10):733-9.](https://www.ncbi.nlm.nih.gov/pubmed/?term=20838408)).
+- DNA 및 RNA 시퀀싱, 단백체학, 이미징, 마이크로어레이에 영향을 미칩니다.
+- 세간의 이목을 끄는 문제와 철회를 야기했습니다.
+    - 제거할 수 없습니다.
+    - 그러나 실험과 혼동되지 않도록 할 수 있습니다.
     
-## Batch Effects - an example
+## 배치 효과 - 예시
 
 - Nat Genet. 2007 Feb;39(2):226-31. Epub 2007 Jan 7.
-- Title: *Common genetic variants account for differences in gene expression among ethnic groups.*
-    - "The results show that specific genetic variation among populations contributes appreciably to differences in gene expression phenotypes."
+- 제목: *일반적인 유전적 변이가 인종 그룹 간의 유전자 발현 차이를 설명합니다.*
+    - "결과는 인구 집단 간의 특정 유전적 변이가 유전자 발현 표현형의 차이에 상당히 기여함을 보여줍니다."
 
 ```{r, message=FALSE}
 library(Biobase)
@@ -446,11 +444,11 @@ geneExpression = exprs(e)
 sampleInfo = pData(e)
 ```
 
-* Note: the `ExpressionSet` object is obsolete, we use `SummarizedExperiment` now
+* 참고: `ExpressionSet` 객체는 더 이상 사용되지 않으며 이제 `SummarizedExperiment`를 사용합니다.
 
-## Date of processing as a proxy for batch
+## 배치의 대리 변수로서의 처리 날짜
 
-- Sample metadata included *date of processing*:
+- 표본 메타데이터에는 *처리 날짜*가 포함되었습니다:
 
 ```{r}
 head(table(sampleInfo$date))
@@ -463,28 +461,28 @@ month = as.integer(format(sampleInfo$date, "%m")) + 12 * year
 table(year, sampleInfo$ethnicity)
 ```
 
-## Visualizing batch effects by PCA
+## PCA를 사용한 배치 효과 시각화
 
 ```{r, cache=TRUE, warning=FALSE}
 pc <- prcomp(t(geneExpression), scale. = TRUE)
 boxplot(
     pc$x[, 1] ~ month,
-    varwidth = TRUE,
-    notch = TRUE,
-    main = "PC1 scores vs. month",
-    xlab = "Month",
+    varwidth = TRUE, # 상자 너비를 표본 크기에 비례하게 조정
+    notch = TRUE, # 중앙값 신뢰 구간 노치 표시
+    main = "PC1 점수 대 월",
+    xlab = "월",
     ylab = "PC1"
 )
 ```
 
-## Visualizing batch effects by MDS
+## MDS를 사용한 배치 효과 시각화
 
-A starting point for a color palette:
+색상 팔레트의 시작점:
 ```{r, eval=FALSE}
-RColorBrewer::display.brewer.all(n = 3, colorblindFriendly = TRUE)
+RColorBrewer::display.brewer.all(n = 3, colorblindFriendly = TRUE) # 색맹 친화적인 3색 팔레트 표시
 ```
 
-Interpolate one color per month on a quantitative palette:
+정량적 팔레트에서 월별로 하나의 색상 보간:
 ```{r}
 col3 <- c(RColorBrewer::brewer.pal(n = 3, "Greys")[2:3], "black")
 MYcols <- colorRampPalette(col3, space = "Lab")(length(unique(month)))
@@ -494,32 +492,32 @@ MYcols <- colorRampPalette(col3, space = "Lab")(length(unique(month)))
 d <- as.dist(1 - cor(geneExpression))
 mds <- cmdscale(d)
 plot(mds, col = MYcols[as.integer(factor(month))],
-     main = "MDS shaded by month")
+     main = "월별 음영 처리된 MDS")
 ```
 
-## The batch effects impact clustering
+## 배치 효과가 군집화에 미치는 영향
 
 ```{r}
 hcclass <- cutree(hclust(d), k = 5)
 table(hcclass, year)
 ```
 
-## Batch Effects - summary
+## 배치 효과 - 요약
 
-- tend to affect many or all measurements by a little bit
-- during experimental design:
-    - keep track of anything that might cause a batch effect for post-hoc analysis
-    - include control samples in each batch
-- batches can be corrected for if randomized in study design
-    - if confounded with treatment or outcome of interest, nothing can help you
-- see Bioconductor [sva](https://bioconductor.org/packages/sva/) package (Surrogate Variable Analysis)
-- I don't recommend batch effect correction in the context of machine learning / prediction modeling
-    - but only believe independent datasets for estimating accuracy
+- 많은 또는 모든 측정값에 약간의 영향을 미치는 경향이 있습니다.
+- 실험 설계 중:
+    - 사후 분석을 위해 배치 효과를 유발할 수 있는 모든 것을 추적합니다.
+    - 각 배치에 대조군 표본을 포함합니다.
+- 연구 설계에서 무작위화된 경우 배치를 수정할 수 있습니다.
+    - 치료 또는 관심 결과와 혼동되는 경우 도움이 될 수 없습니다.
+- Bioconductor [sva](https://bioconductor.org/packages/sva/) 패키지 (대리 변수 분석)를 참조하십시오.
+- 기계 학습 / 예측 모델링의 맥락에서 배치 효과 수정을 권장하지 않습니다.
+    - 그러나 정확도 추정을 위해서는 독립적인 데이터 세트만 신뢰하십시오.
 
-## Links
+## 링크
 
-- A built [html][] version of this lecture is available.
-- The [source][] R Markdown is also available from Github.
+- 이 강의의 빌드된 [html][] 버전이 제공됩니다.
+- [소스][] R Markdown은 Github에서도 제공됩니다.
 
 [html]: https://rpubs.com/lwaldron/AppStatBio2021_day4
 [source]: https://github.com/waldronlab/AppStatBio
