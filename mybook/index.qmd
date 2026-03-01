@@ -1,0 +1,50 @@
+# 강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학
+
+## 강사
+
+Levi Waldron, PhD  
+생물통계학 교수  
+뉴욕 시립대학교 공중보건 및 보건정책 대학원 (City University of New York School Graduate of Public Health and Health Policy)  
+미국 뉴욕주 뉴욕시  
+
+이메일: levi.waldron@sph.cuny.edu
+
+## 요약
+
+이 과정은 생물학자와 생물정보학자들에게 단일 세포 시퀀싱 응용에 중점을 둔 고처리량 생물학 데이터의 엄격한 분석을 수행할 수 있도록, 실용적인 통계 및 데이터 분석 기술을 제공합니다. 본 과정은 수강생이 유전체학 및 R 프로그래밍을 어느 정도 다룰 줄 안다고 가정하지만, 이전에 통계학 교육을 받았을 필요는 없습니다. 이 강의에서는 유전체 기술로 생성된 고차원 데이터를 분석하고 실험을 설계하는 데 필요한 주요 통계적 개념을 다룹니다. 포함되는 내용으로는 탐색적 데이터 분석, 선형 모델링, 범주형 변수 분석, 주성분 분석(PCA) 및 기타 차원 축소 방법, 다중 가설 검정, 배치 효과(batch effects) 등이 있습니다.
+
+## 교재
+
+* 주 교재: Irizarry 및 Love 저, [Biomedical Data Science](https://genomicsclass.github.io/book/) (Leanpub의 [ePub 버전](https://leanpub.com/dataanalysisforthelifesciences/))
+    + [소스 저장소](https://github.com/genomicsclass/labs)
+* 부 교재: Holmes 및 Huber 저, [Modern Statistics for Modern Biology](https://www.huber.embl.de/msmb/)
+* 실습 자료: Amezquita, Lun, Hicks, Gottardo, O’Callaghan 공저, [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) (OSCA)
+
+## 실습
+
+매일 [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/)의 내용을 바탕으로 한 실습(Lab) 세션이 진행되며, 수강생들은 이 실습 과정을 스스로 처음부터 끝까지 시도해 보는 것을 권장합니다.
+
+## 일자별 세션 세부 정보
+
+강의 자료는 https://waldronlab.io/AppStatBio/ 에서 HTML 형식으로 제공됩니다.
+
+1. 소개
+- 확률 변수 (random variables)
+- 확률 분포 (distributions)
+- 1표본 및 2표본 가설 검정 (t-검정, 윌콕슨 검정 등)
+
+2. 차원 축소
+- 고차원 공간에서의 거리
+- 주성분 분석 (PCA) 및 특이값 분해 (SVD)
+- 다차원 척도법 (Multidimensional Scaling)
+- t-SNE 및 UMAP
+
+3. 선형 모델링
+- 다중 선형 회귀
+- 모델 공식 (model formulae)
+- 일반화 선형 모델 (GLM)
+- 다중 가설 검정 (multiple hypothesis testing)
+
+4. 탐색적 데이터 분석 및 배치 효과
+- 탐색적 데이터 분석(EDA)을 위한 시각화
+- 배치 효과(batch effects)에 대하여

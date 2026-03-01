@@ -1,0 +1,108 @@
+---
+title: "고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(AppStatBio)
+```
+
+## 개요
+
+- 다중 선형 회귀 (연속형 및 범주형 예측 변수, 상호작용)
+- 모델 공식 (Model formulae)
+- 일반화 선형 모델 (GLM)
+    - 선형, 로지스틱, 로그-선형 링크
+    - 포아송, 음이항 요차 분포
+- 다중 가설 검정 (Multiple Hypothesis Testing)
+
+## 선형 모델이란?
+
+선형 모델은 다음과 같은 형태를 갖습니다:
+
+1.  $Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ (단순 선형 회귀)
+2.  $Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i$ (이차 회귀)
+
+예측 변수의 개수 제한은 없으며, 모델의 체계적(systematic) 부분은 다음과 같이 표현됩니다:
+
+$$
+E[y|x] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p
+$$
+
+## R에서의 모델 공식 (Model formulae)
+
+* R의 `lm()`, `glm()`, `aov()` 등의 함수는 "모델 공식" 인터페이스를 사용합니다.
+* 기본 형태: `> 반응 변수 ~ 설명 변수` (틸드(`~`)는 "~의 함수로 모델링됨"이라는 의미입니다)
+
+예시:
+* `y ~ x`: 독립 변수 x로 y 예측
+* `y ~ x + z`: 다중 회귀
+* `y ~ x * z`: 변수 간의 상호작용(Interaction) 포함
+
+<center>
+![시간과 커피가 수행 능력에 미치는 상호작용 효과](images/coffee_interaction.jpg)
+</center>
+
+## 거미 다리 데이터 예제 (단순 및 다중 회귀 분석)
+
+거미 다리의 당기는(pulling) 또는 미는(pushing) 마찰 계수를 확인해보겠습니다.
+
+<center>
+<img src="images/srep01101-f4.jpg" height="400"/>
+</center>
+
+```{r spider_demo, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/spider_wolff_gorb_2013.csv"
+spider <- read.csv(file=url(url), skip=1)
+spider.sub <- dplyr::filter(spider, leg=="L1")
+fit <- lm(friction ~ type + leg, data=spider)
+```
+
+선형 회귀 테이블을 생성할 수 있습니다:
+```{r, results="asis"}
+library(gtsummary)
+library(gt)
+fit <- lm(friction ~ type * leg, data=spider)
+regression_table <- tbl_regression(fit) |>
+  as_gt() |> 
+  gt::tab_header(
+    title = "선형 회귀 모델 요약",
+    subtitle = "거미 다리 유형 및 위치에 기반한 마찰력 분석"
+  )
+print(regression_table)
+```
+
+## 일반화 선형 모델 (GLM, Generalized Linear Models)
+
+오차 분포가 정규 분포가 아닌 다양한 데이터 유형(예: 카운트 데이터, 이진 데이터 등)에 적용할 수 있는 모델입니다. 최대 우도 추정(MLE) 방식을 사용합니다.
+
+* **로지스틱 회귀 (Logistic Regression):** 결과가 이진(Binary)인 경우 (예: 단일 염기 다형성 또는 희미한 변이)
+* **로그 선형 GLM (Log-linear GLM):** 카운트 데이터(Count data)에 적합하며 빈도(시퀀싱 깊이 차이) 등을 수용할 수 있습니다.
+* **포아송 모델**과 보다 과대 산포 구조를 반영한 **음이항(Negative Binomial) 모델**을 자주 활용합니다.
+
+## 고차원(다변수)에서의 추론 및 다중 검정
+
+수천 개의 통계적 검정을 동시에 수행할 때, 1종 오류(Type I error)를 철저히 제어해야 합니다.
+
+1. **FWER (가족별 오류율):** 대표적으로 본페로니 교정. 단 하나의 1종 오류가 발생할 확률조차 엄격하게 제어합니다.
+2. **FDR (거짓 발견율 - False Discovery Rate):** 벤자미니-호츠버그 (Benjamini-Hochberg). 거부된 귀무가설 중 1종 오류의 "비율"을 제한하는 좀 더 실용적인 방식입니다.
+
+<center>
+<img src="images/fig-testing-awpvvisfdr-1.png" width="45%">
+<img src="images/fig-testing-BH-1.png" width="45%">
+</center>
+
+## 주의: 통계 추론에서의 "이중 사용(Double-dipping)" 오류
+
+<center>
+![Example from: García-Mantrana _et al._, Gut Microbes 2020](images/doubledipping.jpg)
+</center>
+
+1. 관측값을 기반으로 분류를 선언함.
+2. **동일한 데이터**에서 그 분류 간의 차이를 다시 검정함. (과장된 p-value가 나옴)
+
+데이터를 분리하여 사용하는 것이 중요합니다.

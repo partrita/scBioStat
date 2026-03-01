@@ -1,0 +1,150 @@
+---
+title: "고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+suppressPackageStartupMessages(library(AppStatBio))
+```
+
+# 시작하기 전에
+
+## 환영합니다!
+
+강사의 주요 연구 관심사:
+
+* 고차원 통계 (관측치보다 변수가 더 많은 경우)
+* 예측 모델링 및 검증 방법론
+* 인간 마이크로바이옴의 메타제노믹스 프로파일링
+* 암 연구를 위한 다중 오믹스 데이터 분석
+* https://www.waldronlab.io
+
+## 교재 안내
+
+* [Biomedical Data Science](https://genomicsclass.github.io/book/) (Irizarry & Love 저)
+* [Source repository](https://github.com/genomicsclass/labs)
+* [Modern Statistics for Modern Biology](https://www.huber.embl.de/msmb/) (Holmes & Huber 저)
+* [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) (OSCA) (Amezquita 외 공저)
+
+## 1일차 개요
+
+* 확률 변수와 분포
+* 1표본 및 2표본 가설 검정 (t-검정, 윌콕슨 검정 등)
+* 신뢰 구간
+* R 및 Bioconductor의 핵심 데이터 클래스
+* 교재 0장 및 1장
+
+## 학습 목표
+
+* 확률 변수를 정의하고 비확률 변수와 구분하기
+* 모집단 분포와 표본 분포 구분하기
+* z-검정과 t-검정을 적절히 사용하는 상황 식별하기
+* 신뢰 구간과 표준 오차 해석하기
+* 핵심 R/Bioconductor 데이터 클래스 이해하기
+
+# 확률 변수와 분포
+
+## 확률 변수 (Random Variables)
+
+* **확률 변수**: 측정하거나 범주화할 수 있으며, 그 결과가 적어도 부분적으로 확률(우연)에 의해 결정되는 특성입니다.
+
+* 예시:
+    - 특정 연도 특정 인구 집단에서의 새로운 당뇨병 환자 수
+    - 무작위로 선택된 개인의 체중
+
+* 유형:
+    - 범주형 확률 변수 (예: 질병 유무)
+    - 이산형 확률 변수 (예: 시퀀싱 리드 수)
+    - 연속형 확률 변수 (예: 정규화된 qPCR 강도)
+
+## 확률 변수 - 예시
+
+평균 $\mu = 0$ / 표준 편차 $\sigma = 1$ 인 정규 분포 확률 변수와 샘플 크기 $n=100$
+
+```{r, echo=FALSE}
+set.seed(1)
+x = rnorm(100)
+res = hist(x, main = "Standard Normal Distribution\n mean 0, std. dev. 1", prob =
+               TRUE)
+xdens = seq(min(res$breaks), max(res$breaks), by = 0.01)
+lines(xdens, dnorm(xdens))
+```
+
+## 확률 변수 - 포아송 분포
+
+포아송 분포 확률 변수 ($\lambda = 2$) 와 샘플 크기 $n=100$.
+
+```{r, echo=FALSE}
+x = rpois(100, lambda = 2)
+res = hist(
+    x,
+    main = "Poisson Distribution",
+    prob = FALSE,
+    col = "lightgrey",
+    breaks = seq(-0.5, round(max(x)) + 0.5, by = 0.5)
+)
+xdens = seq(min(x), max(x), by = 1)
+lines(xdens, length(x) * dpois(xdens, lambda = 2), lw = 2)
+```
+
+# 가설 검정
+
+## 왜 가설 검정을 하나요?
+
+* 예/아니오 형태의 답변을 위해:
+    - 모집단의 평균이 가설로 설정한 값과 일치하는가?
+    - 특정 개입(치료 등)이 대조군에 비해 측정 가능한 효과를 발생시키는가?
+
+* 가설 검정 논리
+    * 가설은 표본(sample)으로부터 추론된 모집단(population)에 대한 것입니다.
+    * 전체 모집단을 모두 관찰할 수 없기 때문에 우리는 표본을 사용하여 추론합니다.
+
+<center>
+![Sample vs Population](images/population-vs-sample2.jpg)
+</center>
+
+## 확률 파라미터 기반 검정 (t-검정 등)
+
+```{r}
+library(TeachingDemos)
+set.seed(1)
+(weights = rnorm(10, mean = 75, sd = 10))
+TeachingDemos::z.test(
+    x = weights,
+    mu = 70,  
+    stdev = 10, 
+    alternative = "two.sided"
+)
+```
+
+## p-value의 올바른 사용과 오용
+
+* p-value는 귀무가설($H_0$)이 참이라는 가정 하에, 우리가 관측한 통계량만큼 혹은 그보다 더 극단적인 결과가 나타날 확률입니다.
+* p-value는 **확률 변수**입니다:
+    - 너무 절대적이고 정밀한 값으로 취급하지 마세요.
+    - 변수들이 독립적이라는 기본 가정을 잊지 마세요.
+
+# R 기본 데이터 클래스
+
+<center>
+![Summarized Experiment](images/SE.svg)
+</center>
+
+## Base R 데이터 타입 (벡터, 행렬, 데이터프레임)
+
+
+```{r}
+x <- 11:16
+y <- seq(0, 1, .2)
+z <- c("one", "two", "three", "four", "five", "six")
+a <- factor(z)
+my.df <- data.frame(x, y, z, a, stringsAsFactors = FALSE)
+```
+
+## 실습 예제 및 참고 자료
+
+* [OSCA Introduction Chapter 3](http://bioconductor.org/books/release/OSCA.intro/getting-scrna-seq-datasets.html)
+* R Markdown 원본 코드는 Github를 참조하세요.

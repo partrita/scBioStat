@@ -1,0 +1,77 @@
+---
+title: "고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  cache = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(AppStatBio)
+```
+
+## 2일차 개요
+
+[교재](https://genomicsclass.github.io/book/) 8장:
+
+- 고차원에서의 거리 계산
+- 주성분 분석 (PCA) 및 특이값 분해 (SVD)
+- 다차원 척도법 (MDS)
+- t-SNE 및 UMAP
+
+## 단일 세포 분자(scRNA-seq) 분석 워크플로우
+
+![단일 세포 분석 워크플로우](images/workflow.png)
+
+## 지표(Metrics)와 거리(Distances)
+
+**거리 지표 (metric)**는 요소들 사이의 거리를 계산하는 함수로, 다음 다섯 가지 속성을 만족합니다.
+1. **비음수성:** 거리는 항상 0 이상입니다.
+2. **대칭성:** A에서 B까지의 거리는 B에서 A까지의 거리와 같습니다.
+3. **불가식별성의 동일성:** 자신과의 거리는 항상 0입니다.
+
+## 고차원에서의 유클리디안 거리
+
+단일 세포 데이터와 같이 복잡한 생물학적 데이터셋을 분석하기 위해 차원을 확장하는 개념입니다.
+
+```{r getdata, message=FALSE, warning=FALSE}
+library(GSE5859)
+library(tissuesGeneExpression)
+data(tissuesGeneExpression)
+dim(e) ##유전자 발현 데이터
+table(tissue) ##tissue[i]는 e[,i]와 대응됨
+```
+
+샘플 간 거리를 계산할 때는 `dist()` 함수를 사용하지만, 데이터의 크기에 유의해야 합니다.
+
+## 차원 축소와 PCA
+
+주성분 분석(PCA)은 데이터 간 상관관계가 높은 여러 변수를 더 적은 수의 차원으로 줄이는 데 유용합니다. 노이즈를 줄이고 데이터를 효율적으로 다룰 수 있도록 해줍니다.
+
+<center>
+<img src="images/SVD1.png" alt="SVD" align="middle" style="height: 350px;">
+</center>
+
+## t-SNE와 UMAP
+
+* **t-SNE**는 비선형 차원 축소 기법으로 시각적으로 명확한 클러스터링을 보여줍니다. 그러나 전역적 형태보다는 국소적인 부분 공간 정보에 민감하게 반응합니다.
+
+<center>
+![tSNE](images/tSNE-eg.png)
+</center>
+
+* **UMAP**은 t-SNE에 비해 전역 및 국소적 데이터 구조를 더 잘 유지하며 실행 시간이 훨씬 짧습니다. 최근 단일 세포 데이터 분석에 널리 사용됩니다.
+
+```{r loadlibraries, include=FALSE}
+suppressPackageStartupMessages({
+  library(scRNAseq)
+  library(BiocSingular)
+  library(scran)
+  library(scater)
+})
+sce.zeisel <- ZeiselBrainData()
+sce.zeisel <- logNormCounts(sce.zeisel)
+```
+
+위의 방법을 바탕으로 분석을 진행합니다!

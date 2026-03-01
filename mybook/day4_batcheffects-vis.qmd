@@ -1,0 +1,58 @@
+---
+title: "고처리량 생물학을 위한 응용 통계학: 세션 4 (탐색적 데이터 분석 및 배치 효과)"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(AppStatBio)
+```
+
+## 개요
+
+* 탐색적 데이터 분석 (Exploratory Data Analysis, EDA)
+    * Q-Q 플롯, 상자 그림(Boxplots), 산점도, 화산(Volcano) 플롯, p-value 히스토그램, MA 플롯, 히트맵
+* 배치 효과 (Batch effects, 일괄 처리 효과)
+
+# 탐색적 데이터 분석 (EDA)
+
+데이터 분석 첫 단계로, 시각화 기법을 사용하여 데이터의 편향과 체계적인 오류를 찾고, 가설 검정의 방향성을 잡습니다.
+
+* **QQ 플롯**: 관측된 데이터의 분위수와 이론적 분포(정규 분포 등)의 분위수를 비교하여 분포 일치도를 확인합니다.
+* **상자 그림(Boxplot)**: 평균과 분산뿐 아니라 데이터 분포의 꼬리와 이상치(Outliers)를 한눈에 파악할 수 있도록 해줍니다.
+* **화산 플롯 (Volcano plots)**: 유전자 수천 개의 효과 크기(생물학적 중요성)와 p-value(통계적 중요성)를 동시에 시각화합니다. 양 끝 모서리에 위치한 점들이 주로 가장 의미 있는 유전자 후보군입니다.
+* **p-value 히스토그램**: 전반적인 p-value 분포를 시각화합니다. 만약 배치 효과 등으로 샘플이 독립적이지 않다면 그래프 모양에서 붉은 신호(이상 분포)를 확인할 수 있습니다.
+* **MA 플롯**: 산점도를 45도 회전시킨 꼴로, 두 샘플 혹은 참조 샘플과의 M(로그 비율, Fold Change)과 A(총 평균)를 비교하여 강도 의존적 편향을 관찰합니다.
+
+```{r pvalhist1, echo=TRUE, fig.height=4, fig.width=8}
+library(GSE5859Subset)
+data(GSE5859Subset) 
+library(genefilter)
+
+g <- factor(sampleInfo$group)
+results <- rowttests(geneExpression, g)
+
+par(mar = c(4, 4, 0, 0))
+plot(results$dm,
+     -log10(results$p.value),
+     xlab = "효과 크기 (그룹 평균 차이)",
+     ylab = "- log10(p-value)",
+     main = "Volcano plot")
+abline(h = -log10(0.05 / nrow(geneExpression)), col = "red")
+```
+
+## 데이터를 왜곡하는 나쁜 그래프 피하기
+
+무엇보다 사람의 눈은 각도나 면적의 차이를 판단하는 데 매우 서툽니다. 파이 차트나 가짜 3D(pseudo-3D) 차트를 피하고 되도록 단순한 막대 그래프 등을 선호하세요.
+
+# 배치 효과 (Batch Effects)
+
+실험 측정값 사이의 전반적인 차이가 생물학적 변수에 의해서가 아니라 기술적이거나 다른 알 수 없는 요인(날짜, 측정 장비, 기술자 등)에 의해 유발되는 현상입니다.
+
+1. **배치 효과 방어의 황금률:** 관심 변수(예: 치료 여부)가 실험 과정의 알 수 없는 '배치'와 절대 겹치거나 뒤섞이지(confounded) 않게 해야 합니다. 가장 좋은 방법은 실험 전에 강력하게 **무작위 배정(Randomization)** 하는 것입니다.
+2. **배치 효과 보정:** 만약 실험이 무작위로 구성되었다면 선형 모델 보정 등을 사용하여 배치 효과를 최소화(`sva::ComBat` 등)할 수 있습니다. 단일 세포 데이터의 경우 고유의 `fastMNN` 메서드 등을 종종 사용합니다.
+
+올바른 통계적 분석을 위해 모든 측정 및 실험 프로세스 이력을 꼼꼼하게 기록해 두어야 합니다.

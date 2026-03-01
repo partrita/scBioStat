@@ -1,0 +1,27 @@
+project:
+  type: book
+
+book:
+  title: "scBioStat"
+  author: "Levi Waldron"
+  date: "3/1/2026"
+  chapters:
+    - index.qmd
+    - day1_intro.qmd
+    - day2_unsupervised.qmd
+    - day3_linearmodels.qmd
+    - day4_batcheffects-vis.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+
+execute:
+  eval: false
+
+
+
