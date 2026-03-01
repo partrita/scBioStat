@@ -440,7 +440,7 @@ legend(
 ```{r, message=FALSE}
 library(Biobase)
 library(genefilter)
-library(GSE5859) ## BiocInstaller::biocLite("genomicsclass/GSE5859")
+library(GSE5859) ## BiocManager::install("genomicsclass/GSE5859")
 data(GSE5859)
 geneExpression = exprs(e)
 sampleInfo = pData(e)
