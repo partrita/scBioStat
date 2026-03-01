@@ -261,8 +261,11 @@ system.time(e.standardize.slow <-
                 t(apply(e, 1, function(x)
                     x - mean(x))))
 system.time(e.standardize.fast <- t(scale(t(e), scale = FALSE)))
-all.equal(e.standardize.slow[, 1], e.standardize.fast[, 1])
+system.time(e.standardize.fastest <- e - rowMeans(e))
+all.equal(e.standardize.slow, e.standardize.fastest, check.attributes = FALSE)
 ```
+
+**Note:** `e - rowMeans(e)` is the most efficient method because it leverages R's column-major matrix storage and vectorized subtraction, avoiding the overhead of `apply` or multiple transpositions.
 
 SVD:
 ```{r}
