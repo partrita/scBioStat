@@ -21,6 +21,7 @@ Imports:
     GSE5859Subset,
     IRanges,
     MASS,
+    matrixStats,
     org.Mm.eg.db,
     rafalib,
     RColorBrewer,
