@@ -491,7 +491,7 @@ All are available from the [sva](https://www.bioconductor.org/packages/sva) Bioc
 
 ```{r, fig.height=3}
 rafalib::mypar(1, 2)
-pseudo <- apply(geneExpression, 1, median)
+pseudo <- matrixStats::rowMedians(geneExpression)
 plot(geneExpression[, 1], pseudo)
 plot((geneExpression[, 1] + pseudo) / 2, (geneExpression[, 1] - pseudo))
 ```
@@ -511,7 +511,7 @@ plot((geneExpression[, 1] + pseudo) / 2, (geneExpression[, 1] - pseudo))
 
 ```{r, fig.width=12}
 suppressPackageStartupMessages(library(ComplexHeatmap))
-keep <- rank(apply(geneExpression, 1, var)) <= 100  # 500 most variable genes
+keep <- rank(-matrixStats::rowVars(geneExpression)) <= 100  # 500 most variable genes
 ge <- geneExpression[keep, ]
 ge <- t(scale(t(ge))) #scale
 rownames(ge) <- NULL; colnames(ge) <- NULL
