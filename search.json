@@ -1,0 +1,372 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "scBioStat",
+    "section": "",
+    "text": "1 강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#강사",
+    "href": "index.html#강사",
+    "title": "scBioStat",
+    "section": "1.1 강사",
+    "text": "1.1 강사\nLevi Waldron, PhD\n생물통계학 교수\n뉴욕 시립대학교 공중보건 및 보건정책 대학원 (City University of New York School Graduate of Public Health and Health Policy)\n미국 뉴욕주 뉴욕시\n이메일: levi.waldron@sph.cuny.edu",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#요약",
+    "href": "index.html#요약",
+    "title": "scBioStat",
+    "section": "1.2 요약",
+    "text": "1.2 요약\n이 과정은 생물학자와 생물정보학자들에게 단일 세포 시퀀싱 응용에 중점을 둔 고처리량 생물학 데이터의 엄격한 분석을 수행할 수 있도록, 실용적인 통계 및 데이터 분석 기술을 제공합니다. 본 과정은 수강생이 유전체학 및 R 프로그래밍을 어느 정도 다룰 줄 안다고 가정하지만, 이전에 통계학 교육을 받았을 필요는 없습니다. 이 강의에서는 유전체 기술로 생성된 고차원 데이터를 분석하고 실험을 설계하는 데 필요한 주요 통계적 개념을 다룹니다. 포함되는 내용으로는 탐색적 데이터 분석, 선형 모델링, 범주형 변수 분석, 주성분 분석(PCA) 및 기타 차원 축소 방법, 다중 가설 검정, 배치 효과(batch effects) 등이 있습니다.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#교재",
+    "href": "index.html#교재",
+    "title": "scBioStat",
+    "section": "1.3 교재",
+    "text": "1.3 교재\n\n주 교재: Irizarry 및 Love 저, Biomedical Data Science (Leanpub의 ePub 버전)\n\n소스 저장소\n\n부 교재: Holmes 및 Huber 저, Modern Statistics for Modern Biology\n실습 자료: Amezquita, Lun, Hicks, Gottardo, O’Callaghan 공저, Orchestrating Single-Cell Analysis with Bioconductor (OSCA)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#실습",
+    "href": "index.html#실습",
+    "title": "scBioStat",
+    "section": "1.4 실습",
+    "text": "1.4 실습\n매일 Orchestrating Single-Cell Analysis with Bioconductor의 내용을 바탕으로 한 실습(Lab) 세션이 진행되며, 수강생들은 이 실습 과정을 스스로 처음부터 끝까지 시도해 보는 것을 권장합니다.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#일자별-세션-세부-정보",
+    "href": "index.html#일자별-세션-세부-정보",
+    "title": "scBioStat",
+    "section": "1.5 일자별 세션 세부 정보",
+    "text": "1.5 일자별 세션 세부 정보\n강의 자료는 https://waldronlab.io/AppStatBio/ 에서 HTML 형식으로 제공됩니다.\n\n소개\n\n\n확률 변수 (random variables)\n확률 분포 (distributions)\n1표본 및 2표본 가설 검정 (t-검정, 윌콕슨 검정 등)\n\n\n차원 축소\n\n\n고차원 공간에서의 거리\n주성분 분석 (PCA) 및 특이값 분해 (SVD)\n다차원 척도법 (Multidimensional Scaling)\nt-SNE 및 UMAP\n\n\n선형 모델링\n\n\n다중 선형 회귀\n모델 공식 (model formulae)\n일반화 선형 모델 (GLM)\n다중 가설 검정 (multiple hypothesis testing)\n\n\n탐색적 데이터 분석 및 배치 효과\n\n\n탐색적 데이터 분석(EDA)을 위한 시각화\n배치 효과(batch effects)에 대하여",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>강의 계획서: 단일 세포 시퀀싱 응용을 포함한 고처리량 생물학을 위한 응용 통계학</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html",
+    "href": "day1_intro.html",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "",
+    "text": "3 시작하기 전에",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#환영합니다",
+    "href": "day1_intro.html#환영합니다",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "3.1 환영합니다!",
+    "text": "3.1 환영합니다!\n강사의 주요 연구 관심사:\n\n고차원 통계 (관측치보다 변수가 더 많은 경우)\n예측 모델링 및 검증 방법론\n인간 마이크로바이옴의 메타제노믹스 프로파일링\n암 연구를 위한 다중 오믹스 데이터 분석\nhttps://www.waldronlab.io",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#교재-안내",
+    "href": "day1_intro.html#교재-안내",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "3.2 교재 안내",
+    "text": "3.2 교재 안내\n\nBiomedical Data Science (Irizarry & Love 저)\nSource repository\nModern Statistics for Modern Biology (Holmes & Huber 저)\nOrchestrating Single-Cell Analysis with Bioconductor (OSCA) (Amezquita 외 공저)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#일차-개요",
+    "href": "day1_intro.html#일차-개요",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "3.3 1일차 개요",
+    "text": "3.3 1일차 개요\n\n확률 변수와 분포\n1표본 및 2표본 가설 검정 (t-검정, 윌콕슨 검정 등)\n신뢰 구간\nR 및 Bioconductor의 핵심 데이터 클래스\n교재 0장 및 1장",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#학습-목표",
+    "href": "day1_intro.html#학습-목표",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "3.4 학습 목표",
+    "text": "3.4 학습 목표\n\n확률 변수를 정의하고 비확률 변수와 구분하기\n모집단 분포와 표본 분포 구분하기\nz-검정과 t-검정을 적절히 사용하는 상황 식별하기\n신뢰 구간과 표준 오차 해석하기\n핵심 R/Bioconductor 데이터 클래스 이해하기",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#확률-변수-random-variables",
+    "href": "day1_intro.html#확률-변수-random-variables",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "4.1 확률 변수 (Random Variables)",
+    "text": "4.1 확률 변수 (Random Variables)\n\n확률 변수: 측정하거나 범주화할 수 있으며, 그 결과가 적어도 부분적으로 확률(우연)에 의해 결정되는 특성입니다.\n예시:\n\n특정 연도 특정 인구 집단에서의 새로운 당뇨병 환자 수\n무작위로 선택된 개인의 체중\n\n유형:\n\n범주형 확률 변수 (예: 질병 유무)\n이산형 확률 변수 (예: 시퀀싱 리드 수)\n연속형 확률 변수 (예: 정규화된 qPCR 강도)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#확률-변수---예시",
+    "href": "day1_intro.html#확률-변수---예시",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "4.2 확률 변수 - 예시",
+    "text": "4.2 확률 변수 - 예시\n평균 \\(\\mu = 0\\) / 표준 편차 \\(\\sigma = 1\\) 인 정규 분포 확률 변수와 샘플 크기 \\(n=100\\)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#확률-변수---포아송-분포",
+    "href": "day1_intro.html#확률-변수---포아송-분포",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "4.3 확률 변수 - 포아송 분포",
+    "text": "4.3 확률 변수 - 포아송 분포\n포아송 분포 확률 변수 (\\(\\lambda = 2\\)) 와 샘플 크기 \\(n=100\\).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#왜-가설-검정을-하나요",
+    "href": "day1_intro.html#왜-가설-검정을-하나요",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "5.1 왜 가설 검정을 하나요?",
+    "text": "5.1 왜 가설 검정을 하나요?\n\n예/아니오 형태의 답변을 위해:\n\n모집단의 평균이 가설로 설정한 값과 일치하는가?\n특정 개입(치료 등)이 대조군에 비해 측정 가능한 효과를 발생시키는가?\n\n가설 검정 논리\n\n가설은 표본(sample)으로부터 추론된 모집단(population)에 대한 것입니다.\n전체 모집단을 모두 관찰할 수 없기 때문에 우리는 표본을 사용하여 추론합니다.\n\n\n\n\n\n\nSample vs Population",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#확률-파라미터-기반-검정-t-검정-등",
+    "href": "day1_intro.html#확률-파라미터-기반-검정-t-검정-등",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "5.2 확률 파라미터 기반 검정 (t-검정 등)",
+    "text": "5.2 확률 파라미터 기반 검정 (t-검정 등)\n\nlibrary(TeachingDemos)\nset.seed(1)\n(weights = rnorm(10, mean = 75, sd = 10))\nTeachingDemos::z.test(\n    x = weights,\n    mu = 70,  \n    stdev = 10, \n    alternative = \"two.sided\"\n)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#p-value의-올바른-사용과-오용",
+    "href": "day1_intro.html#p-value의-올바른-사용과-오용",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "5.3 p-value의 올바른 사용과 오용",
+    "text": "5.3 p-value의 올바른 사용과 오용\n\np-value는 귀무가설(\\(H_0\\))이 참이라는 가정 하에, 우리가 관측한 통계량만큼 혹은 그보다 더 극단적인 결과가 나타날 확률입니다.\np-value는 확률 변수입니다:\n\n너무 절대적이고 정밀한 값으로 취급하지 마세요.\n변수들이 독립적이라는 기본 가정을 잊지 마세요.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#base-r-데이터-타입-벡터-행렬-데이터프레임",
+    "href": "day1_intro.html#base-r-데이터-타입-벡터-행렬-데이터프레임",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "6.1 Base R 데이터 타입 (벡터, 행렬, 데이터프레임)",
+    "text": "6.1 Base R 데이터 타입 (벡터, 행렬, 데이터프레임)\n\nx &lt;- 11:16\ny &lt;- seq(0, 1, .2)\nz &lt;- c(\"one\", \"two\", \"three\", \"four\", \"five\", \"six\")\na &lt;- factor(z)\nmy.df &lt;- data.frame(x, y, z, a, stringsAsFactors = FALSE)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day1_intro.html#실습-예제-및-참고-자료",
+    "href": "day1_intro.html#실습-예제-및-참고-자료",
+    "title": "2  고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)",
+    "section": "6.2 실습 예제 및 참고 자료",
+    "text": "6.2 실습 예제 및 참고 자료\n\nOSCA Introduction Chapter 3\nR Markdown 원본 코드는 Github를 참조하세요.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 1 (소개)</span>"
+    ]
+  },
+  {
+    "objectID": "day2_unsupervised.html",
+    "href": "day2_unsupervised.html",
+    "title": "3  고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)",
+    "section": "",
+    "text": "3.1 2일차 개요\n교재 8장:",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)</span>"
+    ]
+  },
+  {
+    "objectID": "day2_unsupervised.html#일차-개요",
+    "href": "day2_unsupervised.html#일차-개요",
+    "title": "3  고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)",
+    "section": "",
+    "text": "고차원에서의 거리 계산\n주성분 분석 (PCA) 및 특이값 분해 (SVD)\n다차원 척도법 (MDS)\nt-SNE 및 UMAP",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)</span>"
+    ]
+  },
+  {
+    "objectID": "day2_unsupervised.html#단일-세포-분자scrna-seq-분석-워크플로우",
+    "href": "day2_unsupervised.html#단일-세포-분자scrna-seq-분석-워크플로우",
+    "title": "3  고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)",
+    "section": "3.2 단일 세포 분자(scRNA-seq) 분석 워크플로우",
+    "text": "3.2 단일 세포 분자(scRNA-seq) 분석 워크플로우\n\n\n\n단일 세포 분석 워크플로우",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)</span>"
+    ]
+  },
+  {
+    "objectID": "day2_unsupervised.html#지표metrics와-거리distances",
+    "href": "day2_unsupervised.html#지표metrics와-거리distances",
+    "title": "3  고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)",
+    "section": "3.3 지표(Metrics)와 거리(Distances)",
+    "text": "3.3 지표(Metrics)와 거리(Distances)\n거리 지표 (metric)는 요소들 사이의 거리를 계산하는 함수로, 다음 다섯 가지 속성을 만족합니다. 1. 비음수성: 거리는 항상 0 이상입니다. 2. 대칭성: A에서 B까지의 거리는 B에서 A까지의 거리와 같습니다. 3. 불가식별성의 동일성: 자신과의 거리는 항상 0입니다.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)</span>"
+    ]
+  },
+  {
+    "objectID": "day2_unsupervised.html#고차원에서의-유클리디안-거리",
+    "href": "day2_unsupervised.html#고차원에서의-유클리디안-거리",
+    "title": "3  고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)",
+    "section": "3.4 고차원에서의 유클리디안 거리",
+    "text": "3.4 고차원에서의 유클리디안 거리\n단일 세포 데이터와 같이 복잡한 생물학적 데이터셋을 분석하기 위해 차원을 확장하는 개념입니다.\n\nlibrary(GSE5859)\nlibrary(tissuesGeneExpression)\ndata(tissuesGeneExpression)\ndim(e) ##유전자 발현 데이터\ntable(tissue) ##tissue[i]는 e[,i]와 대응됨\n\n샘플 간 거리를 계산할 때는 dist() 함수를 사용하지만, 데이터의 크기에 유의해야 합니다.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)</span>"
+    ]
+  },
+  {
+    "objectID": "day2_unsupervised.html#차원-축소와-pca",
+    "href": "day2_unsupervised.html#차원-축소와-pca",
+    "title": "3  고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)",
+    "section": "3.5 차원 축소와 PCA",
+    "text": "3.5 차원 축소와 PCA\n주성분 분석(PCA)은 데이터 간 상관관계가 높은 여러 변수를 더 적은 수의 차원으로 줄이는 데 유용합니다. 노이즈를 줄이고 데이터를 효율적으로 다룰 수 있도록 해줍니다.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)</span>"
+    ]
+  },
+  {
+    "objectID": "day2_unsupervised.html#t-sne와-umap",
+    "href": "day2_unsupervised.html#t-sne와-umap",
+    "title": "3  고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)",
+    "section": "3.6 t-SNE와 UMAP",
+    "text": "3.6 t-SNE와 UMAP\n\nt-SNE는 비선형 차원 축소 기법으로 시각적으로 명확한 클러스터링을 보여줍니다. 그러나 전역적 형태보다는 국소적인 부분 공간 정보에 민감하게 반응합니다.\n\n\n\n\n\ntSNE\n\n\n\n\nUMAP은 t-SNE에 비해 전역 및 국소적 데이터 구조를 더 잘 유지하며 실행 시간이 훨씬 짧습니다. 최근 단일 세포 데이터 분석에 널리 사용됩니다.\n\n위의 방법을 바탕으로 분석을 진행합니다!",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 2 (비지도 학습 및 차원 축소)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html",
+    "href": "day3_linearmodels.html",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "",
+    "text": "4.1 개요",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html#개요",
+    "href": "day3_linearmodels.html#개요",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "",
+    "text": "다중 선형 회귀 (연속형 및 범주형 예측 변수, 상호작용)\n모델 공식 (Model formulae)\n일반화 선형 모델 (GLM)\n\n선형, 로지스틱, 로그-선형 링크\n포아송, 음이항 요차 분포\n\n다중 가설 검정 (Multiple Hypothesis Testing)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html#선형-모델이란",
+    "href": "day3_linearmodels.html#선형-모델이란",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "4.2 선형 모델이란?",
+    "text": "4.2 선형 모델이란?\n선형 모델은 다음과 같은 형태를 갖습니다:\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) (단순 선형 회귀)\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\beta_2 x_i^2 + \\varepsilon_i\\) (이차 회귀)\n\n예측 변수의 개수 제한은 없으며, 모델의 체계적(systematic) 부분은 다음과 같이 표현됩니다:\n\\[\nE[y|x] = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + ... + \\beta_p x_p\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html#r에서의-모델-공식-model-formulae",
+    "href": "day3_linearmodels.html#r에서의-모델-공식-model-formulae",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "4.3 R에서의 모델 공식 (Model formulae)",
+    "text": "4.3 R에서의 모델 공식 (Model formulae)\n\nR의 lm(), glm(), aov() 등의 함수는 “모델 공식” 인터페이스를 사용합니다.\n기본 형태: &gt; 반응 변수 ~ 설명 변수 (틸드(~)는 “~의 함수로 모델링됨”이라는 의미입니다)\n\n예시: * y ~ x: 독립 변수 x로 y 예측 * y ~ x + z: 다중 회귀 * y ~ x * z: 변수 간의 상호작용(Interaction) 포함\n\n\n\n\n시간과 커피가 수행 능력에 미치는 상호작용 효과",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html#거미-다리-데이터-예제-단순-및-다중-회귀-분석",
+    "href": "day3_linearmodels.html#거미-다리-데이터-예제-단순-및-다중-회귀-분석",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "4.4 거미 다리 데이터 예제 (단순 및 다중 회귀 분석)",
+    "text": "4.4 거미 다리 데이터 예제 (단순 및 다중 회귀 분석)\n거미 다리의 당기는(pulling) 또는 미는(pushing) 마찰 계수를 확인해보겠습니다.\n\n\n\n선형 회귀 테이블을 생성할 수 있습니다:\nlibrary(gtsummary)\nlibrary(gt)\nfit &lt;- lm(friction ~ type * leg, data=spider)\nregression_table &lt;- tbl_regression(fit) |&gt;\n  as_gt() |&gt; \n  gt::tab_header(\n    title = \"선형 회귀 모델 요약\",\n    subtitle = \"거미 다리 유형 및 위치에 기반한 마찰력 분석\"\n  )\nprint(regression_table)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html#일반화-선형-모델-glm-generalized-linear-models",
+    "href": "day3_linearmodels.html#일반화-선형-모델-glm-generalized-linear-models",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "4.5 일반화 선형 모델 (GLM, Generalized Linear Models)",
+    "text": "4.5 일반화 선형 모델 (GLM, Generalized Linear Models)\n오차 분포가 정규 분포가 아닌 다양한 데이터 유형(예: 카운트 데이터, 이진 데이터 등)에 적용할 수 있는 모델입니다. 최대 우도 추정(MLE) 방식을 사용합니다.\n\n로지스틱 회귀 (Logistic Regression): 결과가 이진(Binary)인 경우 (예: 단일 염기 다형성 또는 희미한 변이)\n로그 선형 GLM (Log-linear GLM): 카운트 데이터(Count data)에 적합하며 빈도(시퀀싱 깊이 차이) 등을 수용할 수 있습니다.\n포아송 모델과 보다 과대 산포 구조를 반영한 음이항(Negative Binomial) 모델을 자주 활용합니다.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html#고차원다변수에서의-추론-및-다중-검정",
+    "href": "day3_linearmodels.html#고차원다변수에서의-추론-및-다중-검정",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "4.6 고차원(다변수)에서의 추론 및 다중 검정",
+    "text": "4.6 고차원(다변수)에서의 추론 및 다중 검정\n수천 개의 통계적 검정을 동시에 수행할 때, 1종 오류(Type I error)를 철저히 제어해야 합니다.\n\nFWER (가족별 오류율): 대표적으로 본페로니 교정. 단 하나의 1종 오류가 발생할 확률조차 엄격하게 제어합니다.\nFDR (거짓 발견율 - False Discovery Rate): 벤자미니-호츠버그 (Benjamini-Hochberg). 거부된 귀무가설 중 1종 오류의 “비율”을 제한하는 좀 더 실용적인 방식입니다.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day3_linearmodels.html#주의-통계-추론에서의-이중-사용double-dipping-오류",
+    "href": "day3_linearmodels.html#주의-통계-추론에서의-이중-사용double-dipping-오류",
+    "title": "4  고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)",
+    "section": "4.7 주의: 통계 추론에서의 “이중 사용(Double-dipping)” 오류",
+    "text": "4.7 주의: 통계 추론에서의 “이중 사용(Double-dipping)” 오류\n\n\n\n\nExample from: García-Mantrana et al., Gut Microbes 2020\n\n\n\n\n관측값을 기반으로 분류를 선언함.\n동일한 데이터에서 그 분류 간의 차이를 다시 검정함. (과장된 p-value가 나옴)\n\n데이터를 분리하여 사용하는 것이 중요합니다.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 3 (선형 모델)</span>"
+    ]
+  },
+  {
+    "objectID": "day4_batcheffects-vis.html",
+    "href": "day4_batcheffects-vis.html",
+    "title": "5  고처리량 생물학을 위한 응용 통계학: 세션 4 (탐색적 데이터 분석 및 배치 효과)",
+    "section": "",
+    "text": "5.1 개요",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 4 (탐색적 데이터 분석 및 배치 효과)</span>"
+    ]
+  },
+  {
+    "objectID": "day4_batcheffects-vis.html#개요",
+    "href": "day4_batcheffects-vis.html#개요",
+    "title": "5  고처리량 생물학을 위한 응용 통계학: 세션 4 (탐색적 데이터 분석 및 배치 효과)",
+    "section": "",
+    "text": "탐색적 데이터 분석 (Exploratory Data Analysis, EDA)\n\nQ-Q 플롯, 상자 그림(Boxplots), 산점도, 화산(Volcano) 플롯, p-value 히스토그램, MA 플롯, 히트맵\n\n배치 효과 (Batch effects, 일괄 처리 효과)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 4 (탐색적 데이터 분석 및 배치 효과)</span>"
+    ]
+  },
+  {
+    "objectID": "day4_batcheffects-vis.html#데이터를-왜곡하는-나쁜-그래프-피하기",
+    "href": "day4_batcheffects-vis.html#데이터를-왜곡하는-나쁜-그래프-피하기",
+    "title": "5  고처리량 생물학을 위한 응용 통계학: 세션 4 (탐색적 데이터 분석 및 배치 효과)",
+    "section": "6.1 데이터를 왜곡하는 나쁜 그래프 피하기",
+    "text": "6.1 데이터를 왜곡하는 나쁜 그래프 피하기\n무엇보다 사람의 눈은 각도나 면적의 차이를 판단하는 데 매우 서툽니다. 파이 차트나 가짜 3D(pseudo-3D) 차트를 피하고 되도록 단순한 막대 그래프 등을 선호하세요.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>고처리량 생물학을 위한 응용 통계학: 세션 4 (탐색적 데이터 분석 및 배치 효과)</span>"
+    ]
+  }
+]
