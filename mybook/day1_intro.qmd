@@ -106,7 +106,7 @@ lines(xdens, length(x) * dpois(xdens, lambda = 2), lw = 2)
 ![Sample vs Population](images/population-vs-sample2.jpg)
 </center>
 
-## 확률 파라미터 기반 검정 (t-검정 등)
+## 확률 파라미터 기반 검정 (t-검정 등) 
 
 ```{r}
 library(TeachingDemos)
