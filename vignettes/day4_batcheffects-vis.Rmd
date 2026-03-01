@@ -244,7 +244,7 @@ plot((geneExpression[, 1] + pseudo) / 2, (geneExpression[, 1] - pseudo)) # MA pl
 
 ```{r ma1, fig.width=12, echo=FALSE}
 suppressPackageStartupMessages(library(ComplexHeatmap))
-keep <- rank(-matrixStats::rowVars(geneExpression)) <= 100
+keep <- rank(matrixStats::rowVars(geneExpression)) <= 100
 ge <- geneExpression[keep, ]
 ge <- t(scale(t(ge))) # Scale genes across samples
 rownames(ge) <- NULL; colnames(ge) <- NULL

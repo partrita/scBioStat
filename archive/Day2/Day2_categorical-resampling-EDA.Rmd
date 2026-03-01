@@ -511,7 +511,7 @@ plot((geneExpression[, 1] + pseudo) / 2, (geneExpression[, 1] - pseudo))
 
 ```{r, fig.width=12}
 suppressPackageStartupMessages(library(ComplexHeatmap))
-keep <- rank(-matrixStats::rowVars(geneExpression)) <= 100  # 500 most variable genes
+keep <- rank(matrixStats::rowVars(geneExpression)) <= 100  # 500 most variable genes
 ge <- geneExpression[keep, ]
 ge <- t(scale(t(ge))) #scale
 rownames(ge) <- NULL; colnames(ge) <- NULL
