@@ -277,7 +277,8 @@ $$\mathbf{Y} = \mathbf{UDV}^\top$$
 
 Center but do not scale, just to make plots before more legible:
 ```{r scaling, cache=TRUE}
-e.standardize <- t(scale(t(e), scale = FALSE))
+# e.standardize <- t(scale(t(e), scale = FALSE))
+e.standardize <- e - rowMeans(e)
 ```
 
 SVD:
