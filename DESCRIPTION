@@ -19,6 +19,8 @@ Imports:
     genefilter,
     GSE5859,
     GSE5859Subset,
+    gt,
+    gtsummary,
     IRanges,
     MASS,
     matrixStats,
