@@ -77,7 +77,11 @@ library(AppStatBio)
 
 ```{r, echo=FALSE}
 url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/spider_wolff_gorb_2013.csv"
-spider <- read.csv(file=url(url), skip=1)
+filename <- "spider_wolff_gorb_2013.csv"
+if (!file.exists(filename)) {
+  downloader::download(url, filename)
+}
+spider <- read.csv(filename, skip = 1)
 ```
 
 ```{r}
